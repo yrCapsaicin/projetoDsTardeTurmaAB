@@ -1,6 +1,6 @@
 # Autores e autoras do projeto
 André Furlan
-João Pedro
+João Pedro - github.com/joao-pedro291
 Gustavo M. de C. S. Ribeiro
 
 
