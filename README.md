@@ -1,8 +1,12 @@
 # Autores e autoras do projeto
 André Furlan
-Higor Barros
-Daniel Bueno
+
+Higor Barros - https://github.com/Higor-ES-Barros
+
+Daniel Bueno - https://github.com/danielsrbueno
+
 João Pedro
+
 Gustavo M. de C. S. Ribeiro
 
 # Our status site
