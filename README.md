@@ -1,8 +1,10 @@
 # Autores e autoras do projeto
 André Furlan
 Clarice Gomes
-
-
+Higor Barros
+Daniel Bueno
+João Pedro
+Gustavo M. de C. S. Ribeiro
 
 # Our status site
 
