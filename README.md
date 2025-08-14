@@ -6,6 +6,8 @@ Higor Barros - https://github.com/Higor-ES-Barros
 Daniel Bueno - https://github.com/danielsrbueno
 Gustavo de Oliveira Martins - github.com/Gustavo-Oliveira-Martins
 João Pedro - github.com/joao-pedro291
+Gabriel Freitas
+Caio Costa
 André Furlan - github.com/ensismoebius
 
 # Our status site
