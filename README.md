@@ -1,13 +1,13 @@
 # Autores e autoras do projeto
-Gustavo M. de C. S. Ribeiro - github.com/Geistch  
-Cayki Santos Gondim - github.com/scayki  
-Clarice Gomes - github.com/claricegomez  
+Gustavo M. de C. S. Ribeiro - https://github.com/Geistch  
+Cayki Santos Gondim - https://github.com/scayki  
+Clarice Gomes - https://github.com/claricegomez  
 Higor Barros - https://github.com/Higor-ES-Barros  
 Daniel Bueno - https://github.com/danielsrbueno  
-Gustavo de Oliveira Martins - github.com/Gustavo-Oliveira-Martins  
-João Pedro - github.com/joao-pedro291  
-João Paulo - github.com/joaopauloolt  
-André Furlan - github.com/ensismoebius  
+Gustavo de Oliveira Martins - https://github.com/Gustavo-Oliveira-Martins  
+João Pedro - https://github.com/joao-pedro291  
+João Paulo - https://github.com/joaopauloolt  
+André Furlan - https://github.com/ensismoebius  
 
 # Our status site
 
