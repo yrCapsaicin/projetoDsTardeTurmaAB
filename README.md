@@ -1,5 +1,5 @@
 # Autores e autoras do projeto
-André Furlan
+André Furlan - github.com/ensismoebius
 Cayki Santos Gondim
 Gustavo de Oliveira Martins
 Clarice Gomes
