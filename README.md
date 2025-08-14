@@ -1,5 +1,8 @@
 # Autores e autoras do projeto
 André Furlan
+
+Higor Barros
+
 Daniel Bueno
 
 
