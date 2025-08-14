@@ -1,3 +1,8 @@
+# Autores e autoras do projeto
+André Furlan
+
+
+
 # Our status site
 
 [`Status site`](https://ensismoebius.github.io/projetoDsTardeTurmaAB/participacao.html)
