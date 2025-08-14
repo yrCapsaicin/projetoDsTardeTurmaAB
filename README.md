@@ -1,6 +1,7 @@
 # Autores e autoras do projeto
 André Furlan
 João Pedro
+Gustavo M. de C. S. Ribeiro
 
 
 # Our status site
