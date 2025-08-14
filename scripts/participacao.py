@@ -421,14 +421,20 @@ def make_bar_chart_html(scores: Dict[str, int], out_path: str) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Gera participacao.html com gráfico de barras.")
-    parser.add_argument("--out", default="participacao.html", help="arquivo de saída HTML")
+    parser.add_argument(
+        "--out",
+        default="site/participacao.html",   # <<< alterado para gerar no diretório site
+        help="arquivo de saída HTML"
+    )
     args = parser.parse_args()
 
+    os.makedirs(os.path.dirname(args.out), exist_ok=True)  # garante diretório
     ctx = get_repo_context()
     scores = compute_participation(ctx)
     make_bar_chart_html(scores, args.out)
     print(json.dumps(scores, ensure_ascii=False, indent=2))
     print(f"OK: gerado {args.out}")
+
 
 
 if __name__ == "__main__":

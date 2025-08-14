@@ -6,9 +6,9 @@ on:
       - "**"         # todas as branches, inclusive recém-criadas
 
 permissions:
-  contents: read       # ler código e histórico
-  issues: read         # ler issues para pontuação de bugs
-  actions: write       # enviar artifact
+  contents: write     # necessário para publicar no branch gh-pages
+  issues: read
+  actions: write
 
 jobs:
   calcular-participacao:
@@ -18,7 +18,7 @@ jobs:
       - name: checkout (histórico completo)
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # precisamos do histórico e diffs
+          fetch-depth: 0
 
       - name: configurar python
         uses: actions/setup-python@v5
@@ -35,12 +35,21 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
-          python scripts/participacao.py --out participacao.html
+          python scripts/participacao.py
 
       - name: publicar artifact
         uses: actions/upload-artifact@v4
         with:
           name: participacao-html
-          path: participacao.html
+          path: site/participacao.html
           if-no-files-found: error
 
+      - name: deploy para github pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: site
+          publish_branch: gh-pages
+          force_orphan: true
+          keep_files: false
+          cname: ""   # opcional: insira domínio customizado se houver
