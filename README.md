@@ -1,6 +1,7 @@
 # Autores e autoras do projeto
 André Furlan
 Gustavo de Oliveira Martins
+Clarice Gomes
 Higor Barros
 Daniel Bueno
 João Pedro
