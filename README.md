@@ -1,9 +1,9 @@
 # Autores e autoras do projeto
 André Furlan
-Cayki Santos Gondim
+Cayki Santos Gondim - github.com/scayki
 Gustavo de Oliveira Martins
-Clarice Gomes
-Higor Barros
+Clarice Gomes - github.com/claricegomez
+Higor Barros 
 Daniel Bueno
 João Pedro
 Gustavo M. de C. S. Ribeiro
