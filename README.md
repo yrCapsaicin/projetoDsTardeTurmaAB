@@ -1,5 +1,6 @@
 # Autores e autoras do projeto
 André Furlan
+Clarice Gomes
 
 
 
