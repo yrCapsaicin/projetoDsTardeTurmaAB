@@ -1,6 +1,6 @@
 # Autores e autoras do projeto
 André Furlan
-Gustavo de Oliveira Martins
+Gustavo de Oliveira Martins - github.com/Gustavo-Oliveira-Martins
 Clarice Gomes
 Higor Barros
 Daniel Bueno
