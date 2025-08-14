@@ -2,7 +2,7 @@
 
 [`Status site`](https://ensismoebius.github.io/projetoDsTardeTurmaAB/participacao.html)
 
-# Welcome to your Expo app 👋
+# Para acessar a documentação 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
