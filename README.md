@@ -1,5 +1,6 @@
 # Autores e autoras do projeto
-André Furlan
+João Pedro - github.com/joao-pedro291
+André Furlan - github.com/ensismoebius
 Cayki Santos Gondim
 Gustavo de Oliveira Martins
 Clarice Gomes
