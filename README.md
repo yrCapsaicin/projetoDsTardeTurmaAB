@@ -1,4 +1,5 @@
 # Autores e autoras do projeto
+Gustavo M. de C. S. Ribeiro - github.com/Geistch
 Cayki Santos Gondim - github.com/scayki
 Clarice Gomes - github.com/claricegomez
 Higor Barros - https://github.com/Higor-ES-Barros
@@ -6,8 +7,6 @@ Daniel Bueno - https://github.com/danielsrbueno
 Gustavo de Oliveira Martins - github.com/Gustavo-Oliveira-Martins
 João Pedro - github.com/joao-pedro291
 André Furlan - github.com/ensismoebius
-João Pedro
-Gustavo M. de C. S. Ribeiro
 
 # Our status site
 
