@@ -1,7 +1,7 @@
 # Autores e autoras do projeto
 André Furlan
 
-Gustavo M. de C. S. Ribeiro
+Gustavo M. de C. S. Ribeiro - github.com/Geistch
 
 
 # Our status site
