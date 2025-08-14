@@ -1,5 +1,6 @@
 # Autores e autoras do projeto
 André Furlan
+Cayki Santos Gondim
 Gustavo de Oliveira Martins
 Clarice Gomes
 Higor Barros
