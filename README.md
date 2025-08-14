@@ -1,6 +1,6 @@
 # Autores e autoras do projeto
 André Furlan
-
+Daniel Bueno
 
 
 # Our status site
