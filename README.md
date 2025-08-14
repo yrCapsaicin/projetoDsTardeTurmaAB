@@ -1,6 +1,6 @@
 # Our status site
 
-[https://ensismoebius.github.io/projetoDsTardeTurmaAB/participacao.html[(https://ensismoebius.github.io/projetoDsTardeTurmaAB/participacao.html)
+[`Status site`](https://ensismoebius.github.io/projetoDsTardeTurmaAB/participacao.html)
 
 # Welcome to your Expo app 👋
 
