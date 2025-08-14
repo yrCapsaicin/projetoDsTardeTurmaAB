@@ -1,11 +1,11 @@
 # Autores e autoras do projeto
+Higor Barros - https://github.com/Higor-ES-Barros
+Daniel Bueno - https://github.com/danielsrbueno
 Gustavo de Oliveira Martins - github.com/Gustavo-Oliveira-Martins
 João Pedro - github.com/joao-pedro291
 André Furlan - github.com/ensismoebius
 Cayki Santos Gondim
 Clarice Gomes
-Higor Barros
-Daniel Bueno
 João Pedro
 Gustavo M. de C. S. Ribeiro
 
