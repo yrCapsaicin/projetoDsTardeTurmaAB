@@ -1,8 +1,8 @@
 # Autores e autoras do projeto
+Gustavo de Oliveira Martins - github.com/Gustavo-Oliveira-Martins
 João Pedro - github.com/joao-pedro291
 André Furlan - github.com/ensismoebius
 Cayki Santos Gondim
-Gustavo de Oliveira Martins
 Clarice Gomes
 Higor Barros
 Daniel Bueno
