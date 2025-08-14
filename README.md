@@ -1,6 +1,6 @@
 # Autores e autoras do projeto
 André Furlan
-
+Gustavo de Oliveira Martins
 
 
 # Our status site
