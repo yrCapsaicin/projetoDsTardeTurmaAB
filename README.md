@@ -7,7 +7,8 @@ Daniel Bueno - https://github.com/danielsrbueno
 Gustavo de Oliveira Martins - https://github.com/Gustavo-Oliveira-Martins  
 João Pedro - https://github.com/joao-pedro291  
 João Paulo - https://github.com/joaopauloolt  
-André Furlan - https://github.com/ensismoebius 
+André Furlan - https://github.com/ensismoebius
+
 Allix Lemos
 
 # Our status site
