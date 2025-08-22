@@ -8,7 +8,7 @@ Gustavo de Oliveira Martins - https://github.com/Gustavo-Oliveira-Martins
 João Pedro - https://github.com/joao-pedro291  
 João Paulo - https://github.com/joaopauloolt  
 André Furlan - https://github.com/ensismoebius
-Allix Lemos - htts://<seu endereço>
+Allix Lemos - https://github.com/4ll14ng3l
 
 # Our status site
 
