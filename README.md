@@ -14,10 +14,6 @@ Allix Lemos - https://github.com/4ll14ng3l
 
 [`Status site`](https://ensismoebius.github.io/projetoDsTardeTurmaAB/participacao.html)
 
-# Para acessar a documentação 👋
-
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
-
 ## Get started
 
 1. Install dependencies
