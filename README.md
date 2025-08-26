@@ -1,62 +1,62 @@
-# Autores e autoras do projeto
-Gustavo M. de C. S. Ribeiro - https://github.com/Geistch  
-Cayki Santos Gondim - https://github.com/scayki  
-Clarice Gomes - https://github.com/claricegomez  
-Higor Barros - https://github.com/Higor-ES-Barros  
-Daniel Bueno - https://github.com/danielsrbueno  
-Gustavo de Oliveira Martins - https://github.com/Gustavo-Oliveira-Martins  
-João Pedro - https://github.com/joao-pedro291  
-João Paulo - https://github.com/joaopauloolt  
-André Furlan - https://github.com/ensismoebius
-Allix Lemos - https://github.com/4ll14ng3l
+# 🎨🎶 SingerSwipe – Descubra novos artistas de forma divertida
 
-# Our status site
+## 📌 Introdução
+O **SingerSwipe** é um aplicativo inspirado na dinâmica do Tinder, mas voltado para a **descoberta de artistas independentes e pouco reconhecidos**.  
+A proposta é oferecer uma experiência envolvente e intuitiva, ajudando os usuários a conhecerem novos talentos e, ao mesmo tempo, dando mais **visibilidade para artistas emergentes**.
 
-[`Status site`](https://ensismoebius.github.io/projetoDsTardeTurmaAB/participacao.html)
+## 🎯 Objetivos
+- Criar uma plataforma interativa para conectar fãs a artistas independentes.  
+- Oferecer uma experiência divertida e viciante de “swipe de descobertas”.  
+- Ampliar a visibilidade de músicos e artistas visuais em início de carreira.  
+- Facilitar o acesso a links de redes sociais, portfólios e plataformas de streaming.  
 
-## Get started
+## 🚀 Funcionalidades
+- Sistema de **swipe** para descobrir artistas (direita = gostei, esquerda = pular).  
+- Filtros personalizados (gênero musical, estilo de arte, região, vibe etc.).  
+- Exibição de **cards interativos** com foto, nome, descrição e prévia da obra.  
+- Página de detalhes do artista com informações adicionais e links externos.  
+- Integração com plataformas como **Spotify** e redes sociais.  
 
-1. Install dependencies
+## 🛠️ Tecnologias
+- **Backend:** [Python](https://www.python.org/) + [FastAPI](https://fastapi.tiangolo.com/)  
+- **Frontend Mobile:** [React Native](https://reactnative.dev/) com [Expo](https://expo.dev/)  
+- **Banco de Dados:** a definir (ex.: MongoDB, PostgreSQL)  
+- **Autenticação:** JWT ou OAuth2 (planejado)  
+- **Outros:** Integrações com APIs externas (ex.: Spotify API)  
 
-   ```bash
-   npm install
-   ```
+## ⚙️ Instalação e Execução
+### 🔹 Backend (FastAPI)
+1. Clone o repositório:
+  git clone https://github.com/ensismoebius/projetoDsTardeTurmaAB.git
+  cd singerswipe/backend
 
-2. Start the app
+### 🔹 Frontend (React Native + Expo)
 
-   ```bash
-   npx expo start
-   ```
+1. Acesse a pasta do frontend:
+  cd singerswipe/frontend
 
-In the output, you'll find options to open the app in a
+2. Instale as dependências:
+  npm install
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+3. Execute o app com Expo:
+  npx expo start
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+4. Escaneie o QR Code no aplicativo Expo Go para abrir no celular.
 
-## Get a fresh project
+## 📚 Referências Bibliográficas
 
-When you're ready, run:
+- **TIAÑOLO**, Sebastián Ramírez. FastAPI Documentation. Disponível em: https://fastapi.tiangolo.com/
 
-```bash
-npm run reset-project
-```
+- **EXPO. Getting Started with Expo.** Disponível em: https://docs.expo.dev/
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- **REACT NATIVE. Official Documentation.** Disponível em: https://reactnative.dev/
 
-## Learn more
+## 👨‍💻 Créditos
 
-To learn more about developing your project with Expo, look at the following resources:
+Projeto desenvolvido pelo 3ºMDS de 2025.
+Inspirado na ideia de unir arte, música e tecnologia para promover novos talentos.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 📄 Licença
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Este projeto está licenciado sob a licença MIT – veja o arquivo LICENSE
+ para mais detalhes.
