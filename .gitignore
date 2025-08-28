@@ -1,2 +1,4 @@
 expo-env.d.ts
 node_modules/
+*.pyc
+*.__pycache__
