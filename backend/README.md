@@ -81,4 +81,6 @@ pip install plotly requests
 
 - cname → insira domínio customizado se houver (opcional)
 
-🔹 Após o deploy, a página estará disponível em:https://ensismoebius.github.io/projetoDsTardeTurmaAB/participacao.html
+🔹 Após o deploy, a página estará disponível em:https://ensismoebius.github.io/projetoDsTardeTurmaAB/participacao.html 
+
+## Fim.
