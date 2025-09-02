@@ -7,3 +7,6 @@ Swiper Screen iniciada
 
 ### 2925-1;
 Wireframe principal da tela adicionado à pasta
+
+### 2925-2;
+Iniciado prototipação da tela, swipe UP
