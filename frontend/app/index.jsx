@@ -1,5 +1,6 @@
 import { Text, TouchableOpacity, TextInput, View, StyleSheet } from "react-native";
 import { useRouter } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 export default function Index() {
@@ -10,6 +11,12 @@ export default function Index() {
   const roteador = useRouter();
 
   return (
+    <LinearGradient
+          colors={['#fedea6','#fc7ea7', '#7466e6']}
+          start={{ x: 0, y: 0 }} 
+          end={{ x: 1, y: 1 }} 
+          style={styles.container}
+        >
     <View style={styles.container}>
 
 
@@ -52,6 +59,7 @@ export default function Index() {
         </Text>
       </TouchableOpacity>
     </View>
+    </LinearGradient>
   );
 }
 
