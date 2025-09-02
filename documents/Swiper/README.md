@@ -4,3 +4,6 @@
 
 ### 2925;
 Swiper Screen iniciada
+
+### 2925-1;
+Wireframe principal da tela adicionado à pasta
