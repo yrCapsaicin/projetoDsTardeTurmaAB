@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
 import {
   View,
   Text,
@@ -30,6 +31,12 @@ const Cadastro = () => {
   const roteador = useRouter();
 
   return (
+    <LinearGradient
+      colors={['#fedea6','fc7ea7', '#7466e6']}
+      start={{ x: 0, y: 0 }} 
+      end={{ x: 1, y: 1 }} 
+      style={styles.container}
+    >
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <View style={styles.formContainer}>
@@ -84,13 +91,13 @@ const Cadastro = () => {
 
       </View>
     </SafeAreaView>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
   },
