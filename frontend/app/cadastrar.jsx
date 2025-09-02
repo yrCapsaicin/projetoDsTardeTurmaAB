@@ -32,7 +32,7 @@ const Cadastro = () => {
 
   return (
     <LinearGradient
-      colors={['#fedea6','fc7ea7', '#7466e6']}
+      colors={['#fedea6','#fc7ea7', '#7466e6']}
       start={{ x: 0, y: 0 }} 
       end={{ x: 1, y: 1 }} 
       style={styles.container}
