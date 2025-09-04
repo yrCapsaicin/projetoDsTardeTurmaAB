@@ -12,6 +12,12 @@ fake_db = [
 def get_users():
     return fake_db
 
+@router.get("/{user_id}")
+def get_user(user_id: int):
+    user = next((user for user in fake_db if user["id"] == user_id), None)
+    if user:
+        return user
+
 @router.post("/")
 def create_user(user: User):
     new_user = {"id": len(fake_db) + 1, "name": user.name}
