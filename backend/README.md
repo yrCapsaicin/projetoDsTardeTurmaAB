@@ -1,6 +1,6 @@
 # Documentação do backend
 
-# 🚀 SingerSwipe Backend
+## 🚀 SingerSwipe Backend
 
 Este repositório contém o backend do projeto **SingerSwipe**.  
 Aqui você encontra instruções para rodar o ambiente localmente e detalhes sobre a pipeline de CI/CD.
@@ -10,21 +10,23 @@ Aqui você encontra instruções para rodar o ambiente localmente e detalhes sob
 ## ⚙️ Setup Local
 
 ### 1. Pré-requisitos
+
 - [Python 3.11+](https://www.python.org/)
 - [Git](https://git-scm.com/)
 
 ### 2. Clonar o repositório
+
 ```bash
 git clone https://github.com/ensismoebius/projetoDsTardeTurmaAB
 cd projetoDsTardeTurmaAB 
 ```
 
 ### 3. Abrir repositório no Visual Studio
+
 - File > Open Folder (caso não tenha mudado o caminho do projeto) >
  `C:\Users\"seu usuario"\Documents\GitHub\projetoDsTardeTurmaAB`
 
-
-# 🚀 Pipeline: Participação por Usuário
+## 🚀 Pipeline: Participação por Usuário
 
 Esta pipeline do **GitHub Actions** gera uma visualização da participação dos usuários em um repositório e publica o resultado no **GitHub Pages**.
 
@@ -81,6 +83,6 @@ pip install plotly requests
 
 - cname → insira domínio customizado se houver (opcional)
 
-🔹 Após o deploy, a página estará disponível em:https://ensismoebius.github.io/projetoDsTardeTurmaAB/participacao.html 
+🔹 Após o deploy, a página estará disponível em:<https://ensismoebius.github.io/projetoDsTardeTurmaAB/participacao.html>
 
-## Fim.
+## Fim
