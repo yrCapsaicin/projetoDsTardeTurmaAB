@@ -1,3 +1,7 @@
+"""
+Este módulo define rotas para operações CRUD de usuários usando FastAPI.
+"""
+
 from fastapi import APIRouter
 from app.models import User
 
