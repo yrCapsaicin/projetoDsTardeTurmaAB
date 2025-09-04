@@ -17,6 +17,8 @@ Funções:
 - create_user(user): Cria um novo usuário com nome fornecido.
 - update_user(user_id, user): Atualiza o nome do usuário pelo ID.
 - delete_user(user_id): Remove o usuário pelo ID.
+
+Nota: Este código utiliza um banco de dados em memória apenas para fins de demonstração.
 """
 
 from fastapi import APIRouter
