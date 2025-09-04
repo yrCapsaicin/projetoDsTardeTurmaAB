@@ -10,6 +10,13 @@ Rotas:
 
 Variáveis:
 - fake_db: Lista simulando um banco de dados de usuários, cada usuário é um dicionário com 'id' e 'name'.
+
+Funções:
+- get_users(): Retorna todos os usuários.
+- get_user(user_id): Retorna um usuário pelo ID, ou None se não encontrado.
+- create_user(user): Cria um novo usuário com nome fornecido.
+- update_user(user_id, user): Atualiza o nome do usuário pelo ID.
+- delete_user(user_id): Remove o usuário pelo ID.
 """
 
 from fastapi import APIRouter
