@@ -23,6 +23,7 @@ Nota: Este código utiliza um banco de dados em memória apenas para fins de dem
 
 from fastapi import APIRouter
 from app.models import User
+from app.db.fake_db import fake_db
 
 router = APIRouter()
 
