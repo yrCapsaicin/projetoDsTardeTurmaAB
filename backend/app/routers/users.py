@@ -30,3 +30,10 @@ def update_user(user_id: int, user: User):
         return {"error": "User not found"}
     fake_db[user_id - 1] = {"id": user_id, "name": user.name}
     return {"message": "User updated"}
+
+@router.delete("/{user_id}")
+def delete_user(user_id: int):
+    if user_id > len(fake_db):
+        return {"error": "User not found"}
+    del fake_db[user_id - 1]
+    return {"message": "User deleted"}
