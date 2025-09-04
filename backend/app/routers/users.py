@@ -7,6 +7,9 @@ Rotas:
 - POST /: Cria um novo usuário e o adiciona ao banco de dados falso.
 - PUT /{user_id}: Atualiza o nome de um usuário existente pelo ID.
 - DELETE /{user_id}: Remove um usuário do banco de dados falso pelo ID.
+
+Variáveis:
+- fake_db: Lista simulando um banco de dados de usuários, cada usuário é um dicionário com 'id' e 'name'.
 """
 
 from fastapi import APIRouter
