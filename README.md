@@ -81,6 +81,16 @@ $ docker compose up
 
 4. Escaneie o QR Code no aplicativo Expo Go para abrir no celular.
 
+## Endpoints
+
+### Rotas
+
+- GET /: Retorna a lista de usuários do banco de dados falso.
+- GET /{user_id}: Retorna um usuário específico pelo ID.
+- POST /: Cria um novo usuário e o adiciona ao banco de dados falso.
+- PUT /{user_id}: Atualiza o nome de um usuário existente pelo ID.
+- DELETE /{user_id}: Remove um usuário do banco de dados falso pelo ID.
+
 ## 📚 Referências Bibliográficas
 
 - **TIAÑOLO**, Sebastián Ramírez. FastAPI Documentation. Disponível em: https://fastapi.tiangolo.com/
