@@ -2,15 +2,11 @@ name: CI Frontend
 
 on:
   push:
-    branches: 
-    - main
-    paths:
-      - 'frontend/**'
+    branches: [main]
+    paths: ['frontend/**']
   pull_request:
-    branches: 
-    - main
-    paths:
-      - 'frontend/**'
+    branches: [main]
+    paths: ['frontend/**']
 
 jobs:
   frontend-ci:
@@ -34,3 +30,6 @@ jobs:
 
       - name: Expo Doctor Validation
         run: npx expo-doctor --verbose
+
+      - name: Run ESLint
+        run: npx eslint . --ext .js,.jsx,.ts,.tsx --max-warnings=0
