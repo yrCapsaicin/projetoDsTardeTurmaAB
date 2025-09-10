@@ -29,7 +29,7 @@ router = APIRouter()
 
 @router.get("/")
 def get_users():
-    return fake_db
+    return fake_db.users
 
 @router.get("/{user_id}")
 def get_user(user_id: int):
@@ -40,7 +40,7 @@ def get_user(user_id: int):
 @router.post("/")
 def create_user(user: User):
     new_user = {"id": len(fake_db) + 1, "name": user.name}
-    fake_db.append(new_user)
+    fake_db.users.append(new_user)
     return new_user
 
 @router.put("/{user_id}")
