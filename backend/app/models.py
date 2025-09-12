@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import date
 
 class User(BaseModel):
     id: int
@@ -19,9 +20,11 @@ class Artist(BaseModel):
 class Music(BaseModel):
     id: int
     title: str
-    duration: float
+    description: str
+    duration: str
     link: str
     lyric: str
+    posted: date
     credits: list[int]
 
 class Styles(BaseModel):
