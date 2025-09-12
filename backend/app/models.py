@@ -4,9 +4,9 @@ class User(BaseModel):
     id: int
     name: str
     email: str
-    password: float
+    password: str
     bio: str
-    styles: list[str]
+    styles: list[int]
 
 class Artist(BaseModel):
     id: int
