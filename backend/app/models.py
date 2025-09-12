@@ -17,8 +17,13 @@ class Artist(BaseModel):
     musics: list[str]
 
 class Music(BaseModel):
+    id: int
     title: str
     duration: int
     link: str
     lyric: int
     credits: list[str]
+
+class Styles(BaseModel):
+    id: int
+    name: str
