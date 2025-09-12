@@ -19,10 +19,10 @@ class Artist(BaseModel):
 class Music(BaseModel):
     id: int
     title: str
-    duration: int
+    duration: float
     link: str
-    lyric: int
-    credits: list[str]
+    lyric: str
+    credits: list[int]
 
 class Styles(BaseModel):
     id: int
