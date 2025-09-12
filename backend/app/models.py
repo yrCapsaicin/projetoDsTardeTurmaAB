@@ -10,3 +10,7 @@ class User(BaseModel):
 
 class Music(BaseModel):
     title: str
+    duration: int
+    link: str
+    lyric: int
+    credits: list[str]
