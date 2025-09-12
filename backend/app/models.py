@@ -12,9 +12,9 @@ class Artist(BaseModel):
     id: int
     name: str
     email: str
-    password: int
+    password: str
     bio: str
-    musics: list[str]
+    musics: list[int]
 
 class Music(BaseModel):
     id: int
