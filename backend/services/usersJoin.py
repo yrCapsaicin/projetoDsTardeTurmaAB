@@ -74,3 +74,20 @@ def recommend_collaborative_user(
 
   if not track_scores:
       return recommend_popular(User=User, Music=Music, UserMusicRating=UserMusicRating, user_id=user_id, limit=limit)
+  
+  top = track_scores.most_common(limit)
+  music_ids = [m for m, _ in top]
+
+  musics_q = Music.select().where(Music.id.in_(music_ids))
+  musics = []
+  score_map = {m: s for m, s in top}
+  for m in musics_q:
+      musics.append({
+          "id": m.id,
+          "title": getattr(m, "title", None),
+          "artist_id": getattr(m, "artist_id", None),
+          "score": float(score_map.get(m.id, 0.0))
+      })
+      
+  musics.sort(key=lambda x: x["score"], reverse=True)
+  return musics
