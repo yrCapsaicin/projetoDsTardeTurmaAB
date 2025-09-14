@@ -1,4 +1,4 @@
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Counter
 from peewee import fn, JOIN
 from collections import defaultdict
 
@@ -51,3 +51,26 @@ def recommend_collaborative_user(
               .where((UserMusicRating.user.in_(candidate_user_ids)) & (UserMusicRating.rating == 1)))
   for r in likes_q:
       likes_map[r.user_id].add(r.music_id)
+
+  def jaccard(a:set, b:set):
+    if not a and not b: return 0.0
+    inter = len(a & b); union = len(a | b)
+    return (inter / union) if union else 0.0
+  
+  sim_scores = {}
+  # Calculo de similaridade
+  for uid, liked_set in likes_map.items():
+      sim = jaccard(set(target_likes), liked_set)
+      if sim > 0:
+          sim_scores[uid] = sim
+  if not sim_scores:
+      return recommend_popular(User=User, Music=Music, UserMusicRating=UserMusicRating, user_id=user_id, limit=limit)
+  
+  track_scores = Counter()
+  for uid, sim in sim_scores.items():
+      for mid in likes_map.get(uid, set()):
+          if mid not in target_likes:
+              track_scores[mid] += sim
+
+  if not track_scores:
+      return recommend_popular(User=User, Music=Music, UserMusicRating=UserMusicRating, user_id=user_id, limit=limit)
