@@ -50,3 +50,14 @@ def recommend_popular(
         .group_by(Music.id)
         .order_by(fn.COUNT(UserMusicRating.id).desc(), Music.posted_at.desc())
         .limit(limit))
+  out = []
+  for row in q:
+      out.append({
+          "id": row.id,
+          "title": getattr(row, "title", None),
+          "artist_id": getattr(row, "artist_id", None),
+          "likes": int(getattr(row, "likes", 0) or 0),
+          "posted_at": getattr(row, "posted_at", None)
+      })
+  return out
+
