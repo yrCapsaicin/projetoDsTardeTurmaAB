@@ -1,5 +1,6 @@
 from typing import Dict, Any, List
 from peewee import fn, JOIN
+from collections import defaultdict
 
 from backend.services.popular import recommend_popular
 from .helper import try_import_models
@@ -43,3 +44,10 @@ def recommend_collaborative_user(
   candidate_user_ids = [r.user_id for r in candidates_q]
   if not candidate_user_ids:
       return recommend_popular(User=User, Music=Music, UserMusicRating=UserMusicRating, user_id=user_id, limit=limit)
+  
+  likes_map = defaultdict(set)
+  likes_q = (UserMusicRating
+              .select(UserMusicRating.user, UserMusicRating.music)
+              .where((UserMusicRating.user.in_(candidate_user_ids)) & (UserMusicRating.rating == 1)))
+  for r in likes_q:
+      likes_map[r.user_id].add(r.music_id)
