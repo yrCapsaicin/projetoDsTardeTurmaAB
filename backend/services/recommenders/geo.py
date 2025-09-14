@@ -18,13 +18,21 @@ def recommend_geo(User=None, Music=None, UserMusicRating=None, user_id: int = No
   if not user or getattr(user, "latitude", None) is None or getattr(user, "longitude", None) is None:
     return recommend_popular(User=User, Music=Music, UserMusicRating=UserMusicRating, user_id=user_id, limit=limit)
 
+  q_limit = 1000
+
+  rated_subq = (
+    UserMusicRating
+      .select(UserMusicRating.music)
+      .where(UserMusicRating.user == user_id)
+  )
+
   sample_q = (
     Music
       .select(Music, User.latitude, User.longitude)
       .join(User, on=(Music.artist == User.id))
-      .where((User.latitude.is_null(False)) & (User.longitude.is_null(False)))
+      .where((User.latitude.is_null(False)) & (User.longitude.is_null(False)) & (Music.id.not_in(rated_subq)))
       .order_by(Music.posted_at.desc())
-      .limit(1000)
+      .limit(q_limit)
   )
 
   candidates: List[Tuple[float, Any]] = []
