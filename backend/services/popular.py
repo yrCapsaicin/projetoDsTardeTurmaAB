@@ -1,39 +1,20 @@
 from typing import Dict, Any, List
 from peewee import fn, JOIN
+from .helper import try_import_models
 
-# --------------------------
-# Helper de importação de models
-# --------------------------
-def try_import_models() -> Dict[str, Any]:
-  candidates = [
-      "backend.models",
-      "backend.models.models",
-      "models",
-      "app.models",
-  ]
-
-  for base in candidates:
-      try:
-          mod = __import__(base, fromlist=["Users", "Musics", "user_music_ratings"])
-          Users = getattr(mod, "Users", None)
-          Musics = getattr(mod, "Musics", None)
-          UserMusicRating = getattr(mod, "user_music_ratings", None)
-          if Users and Musics and UserMusicRating:
-              return {
-                  "Users": Users,
-                  "Musics": Musics,
-                  "UserMusicRating": UserMusicRating,
-              }
-      except Exception:
-          continue
-
-  return {}
-
-# --------------------------
-# Core recommenders
-# Todas as funções recebem os Model classes (User, Music, UserMusicRating).
-# --------------------------
-
+'''
+  Observação futura:
+  - Limit vai funcionar para testar, porém precisara ser paginado depois.
+  -- Adições possíveis --
+  - Um parâmetro opcional "exclude_ids" para permitir
+    a exclusão de músicas específicas da recomendação.
+  - Um parâmetro opcional "min_likes" para filtrar músicas
+    que tenham pelo menos um certo número de likes.
+  - Um parâmetro opcional "recent_days" para considerar
+    apenas músicas postadas nos últimos N dias.
+  - Um parâmetro opcional "order_by" para permitir
+    ordenação personalizada dos resultados.
+'''
 def recommend_popular(
     User=None, Music=None, UserMusicRating=None,
     user_id: int = None, limit: int = 10
