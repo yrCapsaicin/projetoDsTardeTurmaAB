@@ -35,9 +35,18 @@ def try_import_models() -> Dict[str, Any]:
 # --------------------------
 
 def recommend_popular(
-    User, Music, UserMusicRating,
+    User=None, Music=None, UserMusicRating=None,
     user_id: int = None, limit: int = 10
 ) -> List[Dict[str, Any]]:
+
+  if not (User and Music and UserMusicRating):
+    imported = try_import_models()
+    User = User or imported.get("User")
+    Music = Music or imported.get("Music")
+    UserMusicRating = UserMusicRating or imported.get("UserMusicRating")
+    
+  if not (User and Music and UserMusicRating):
+    raise RuntimeError("Modelos não fornecidos.")
 
   subq = (UserMusicRating
           .select(UserMusicRating.music)
