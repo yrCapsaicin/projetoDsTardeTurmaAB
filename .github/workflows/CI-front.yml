@@ -41,3 +41,13 @@ jobs:
           else
           echo "Apenas warnings encontrados, seguindo o CI-frontend"
           fi
+
+      - name: Eslint Validation
+        run: |
+          npx eslint . 2>&1 | tee eslint.log || true
+          if grep -q "error" eslint.log; then
+          echo "Erros de lint encontrados!"
+          exit 1
+          else
+          echo "Apenas warnings encontrados, seguindo o CI-frontend"
+          fi
