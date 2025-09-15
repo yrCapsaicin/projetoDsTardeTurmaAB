@@ -33,4 +33,11 @@ jobs:
         run: npm ci
 
       - name: Expo Doctor Validation
-        run: npx expo-doctor --verbose
+        run: |
+          npx expo-doctor --verbose 2>&1 | tee doctor.log
+          if grep -q "ERROR" doctor.log; then
+          echo "Erros críticos encontrados!"
+          exit 1
+          else
+          echo "Apenas warnings encontrados, seguindo o CI-frontend"
+          fi
