@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, TextInput, View, StyleSheet } from "react-native";
+import { Text, TouchableOpacity, TextInput, View, StyleSheet, Button } from "react-native";
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -7,6 +7,7 @@ export default function Index() {
   function cadastro() {
     roteador.push('/cadastrar');
   }
+
 
   const roteador = useRouter();
 
@@ -51,6 +52,7 @@ export default function Index() {
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
+
 
       <TouchableOpacity onPress={cadastro}>
         <Text style={styles.footer}>
