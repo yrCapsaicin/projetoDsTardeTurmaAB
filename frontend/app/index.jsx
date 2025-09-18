@@ -7,6 +7,10 @@ export default function Index() {
   function cadastro() {
     roteador.push('/cadastrar');
   }
+  function curtidas(){
+    roteador.push( '/curtidas');
+  }
+
 
   const roteador = useRouter();
 
@@ -50,6 +54,13 @@ export default function Index() {
 
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Entrar</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={curtidas}>
+      <Text style={styles.footer}>
+          Quer musicas curtidas?{' '}
+          <Text style={styles.footerLink}>Relembres-se</Text>
+        </Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={cadastro}>
