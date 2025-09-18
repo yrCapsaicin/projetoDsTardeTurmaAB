@@ -1,0 +1,60 @@
+name: CI Frontend
+
+on:
+  push:
+    branches: [main]
+    paths: ["frontend/**"]
+  pull_request:
+    branches: [main]
+    paths: ["frontend/**"]
+
+jobs:
+  frontend-ci:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: frontend
+
+      - name: Expo Doctor Validation
+        continue-on-error: true
+        run: |
+          npx expo-doctor --verbose 2>&1 | tee doctor.log
+          if grep -q "ERROR" doctor.log; then
+            echo "Erros críticos encontrados!"
+            exit 1
+          else
+            echo "Apenas warnings encontrados, seguindo o CI-frontend"
+          fi
+
+      - name: Eslint Validation
+        run: |
+          npx eslint . 2>&1 | tee eslint.log || true
+          if grep -q "error" eslint.log; then
+            echo "Erros de lint encontrados!"
+            exit 1
+          else
+            echo "Apenas warnings encontrados, seguindo o CI-frontend"
+          fi
+
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-logs
+          path: |
+            frontend/doctor.log
+            frontend/eslint.log

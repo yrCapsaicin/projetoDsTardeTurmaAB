@@ -1,6 +1,7 @@
-import { Text, TouchableOpacity, TextInput, View, StyleSheet } from "react-native";
-import { useRouter } from 'expo-router';
+import { Text, TouchableOpacity, TextInput, View, StyleSheet, Button } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 
 export default function Index() {
@@ -54,6 +55,7 @@ export default function Index() {
       <TouchableOpacity style={styles.button} onPress={entrar}>
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
+
 
       <TouchableOpacity onPress={cadastro}>
         <Text style={styles.footer}>
