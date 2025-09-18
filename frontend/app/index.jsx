@@ -8,10 +8,9 @@ export default function Index() {
   function cadastro() {
     roteador.push('/cadastrar');
   }
-  function perfil() {
-    roteador.push('/telaPerfil');
+  function entrar() {
+    roteador.push('/uploadMusic');
   }
-
 
   const roteador = useRouter();
 
@@ -53,7 +52,7 @@ export default function Index() {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={perfil}>
+      <TouchableOpacity style={styles.button} onPress={entrar}>
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
 
