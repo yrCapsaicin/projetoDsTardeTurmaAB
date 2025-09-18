@@ -1,12 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
   Animated,
+  Dimensions,
   PanResponder,
   ScrollView,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -25,29 +25,6 @@ export default function TinderSwipeSquare() {
   const [likedProfiles, setLikedProfiles] = useState([]);
   const [dislikedProfiles, setDislikedProfiles] = useState([]);
   const position = useRef(new Animated.ValueXY()).current;
-
-  // Interpolations para os labels
-  const rotate = position.x.interpolate({
-    inputRange: [-width / 2, 0, width / 2],
-    outputRange: ['-15deg', '0deg', '15deg'],
-  });
-
-  const likeOpacity = position.x.interpolate({
-    inputRange: [0, width / 4],
-    outputRange: [0, 1],
-    extrapolate: 'clamp',
-  });
-
-  const dislikeOpacity = position.x.interpolate({
-    inputRange: [-width / 4, 0],
-    outputRange: [1, 0],
-    extrapolate: 'clamp',
-  });
-
-  const animatedStyle = {
-    transform: [...position.getTranslateTransform(), { rotate }],
-    marginHorizontal: 20,
-  };
 
   const panResponder = useRef(
     PanResponder.create({
@@ -104,6 +81,16 @@ export default function TinderSwipeSquare() {
     setCurrentIndex((prev) => prev + 1);
   };
 
+  const rotate = position.x.interpolate({
+    inputRange: [-width / 2, 0, width / 2],
+    outputRange: ['-15deg', '0deg', '15deg'],
+  });
+
+  const animatedStyle = {
+    transform: [...position.getTranslateTransform(), { rotate }],
+    marginHorizontal: 20,
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
@@ -112,16 +99,6 @@ export default function TinderSwipeSquare() {
             style={[styles.card, animatedStyle]}
             {...panResponder.panHandlers}
           >
-            {/* Label LIKE */}
-            <Animated.View style={[styles.likeLabel, { opacity: likeOpacity }]}>
-              <Text style={styles.likeText}>LIKE</Text>
-            </Animated.View>
-
-            {/* Label DISLIKE */}
-            <Animated.View style={[styles.dislikeLabel, { opacity: dislikeOpacity }]}>
-              <Text style={styles.dislikeText}>DISLIKE</Text>
-            </Animated.View>
-
             <Text style={styles.profileName}>
               {profiles[currentIndex].name}
             </Text>
@@ -204,37 +181,5 @@ const styles = StyleSheet.create({
   },
   resultsContainer: {
     alignItems: 'center',
-  },
-  likeLabel: {
-    position: 'absolute',
-    top: 30,
-    left: 20,
-    transform: [{ rotate: '-20deg' }],
-    borderWidth: 2,
-    borderColor: 'green',
-    padding: 10,
-    borderRadius: 8,
-    backgroundColor: 'rgba(0,255,0,0.1)',
-  },
-  likeText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'green',
-  },
-  dislikeLabel: {
-    position: 'absolute',
-    top: 30,
-    right: 20,
-    transform: [{ rotate: '20deg' }],
-    borderWidth: 2,
-    borderColor: 'red',
-    padding: 10,
-    borderRadius: 8,
-    backgroundColor: 'rgba(255,0,0,0.1)',
-  },
-  dislikeText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'red',
   },
 });
