@@ -15,13 +15,13 @@ const Cadastro = () => {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const [whatsapp, setWhatsapp] = useState('');
+  
 
   const handleCadastro = () => {
     console.log('Nome:', nome);
     console.log('Email:', email);
     console.log('Senha:', senha);
-    console.log('WhatsApp:', whatsapp);
+   
   };
 
   function Inicio() {
@@ -42,56 +42,45 @@ const Cadastro = () => {
       <View style={styles.formContainer}>
         <Text style={styles.titulo}>Cadastro</Text>
 
-        <Text style={styles.label}>Nome</Text>
+       
         <TextInput
           style={styles.input}
-          placeholder="Digite seu nome"
-          placeholderTextColor="#aaa"
+          placeholder="Nome de usuário"
+          placeholderTextColor="#FFF"
           value={nome}
           onChangeText={setNome}
         />
 
-        <Text style={styles.label}>Email</Text>
+        
         <TextInput
           style={styles.input}
-          placeholder="Digite seu email"
-          placeholderTextColor="#aaa"
+          placeholder="Email"
+          placeholderTextColor="#FFF"
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
         />
 
-        <Text style={styles.label}>Senha</Text>
+        
         <TextInput
           style={styles.input}
-          placeholder="Digite sua senha"
-          placeholderTextColor="#aaa"
+          placeholder="Senha"
+          placeholderTextColor="#FFF"
           value={senha}
           onChangeText={setSenha}
           secureTextEntry
         />
 
-        <Text style={styles.label}>WhatsApp</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Digite seu número"
-          placeholderTextColor="#aaa"
-          value={whatsapp}
-          onChangeText={setWhatsapp}
-          keyboardType="phone-pad"
-        />
-
         <TouchableOpacity style={styles.botao} onPress={handleCadastro}>
-          <Text style={styles.textoBotao}>Cadastrar</Text>
+          <Text style={styles.textoBotao}>Login</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.botao} onPress={Inicio}>
-          <Text style={styles.textoBotao}>Voltar</Text>
-        </TouchableOpacity>
-
+        
       </View>
     </SafeAreaView>
     </LinearGradient>
+
+    
   );
 };
 
@@ -109,45 +98,40 @@ const styles = StyleSheet.create({
   titulo: {
     fontSize: 26,
     fontFamily: 'negrito',
-    color: '#000',
+    color: '#fff',
     textAlign: 'center',
   },
-  label: {
-    fontSize: 14,
-    fontFamily: 'normal',
-    color: '#333',
-    marginBottom: 6,
-  },
   input: {
-    height: 50,
-    backgroundColor: '#fff',
+    height: 35,
+    
     borderRadius: 20,
-    borderWidth: 2,
-    paddingHorizontal: 14,
+   
+    paddingHorizontal: 20,
     fontSize: 16,
     fontFamily: 'normal',
     borderWidth: 1,
-    borderColor: '#000',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10,
+    borderColor: '#FFF',
+    marginTop: 30,
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
-    elevation: 3,
+    elevation: 5,
   },
   botao: {
-    backgroundColor: '#000',
-    paddingVertical: 14,
-    borderRadius: 8,
+    backgroundColor: '#1d1436',
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderRadius: 50,
+     borderColor: '#8000D5',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 30,
     marginBottom: 20,
+    
   },
   textoBotao: {
-    color: '#fff',
-    fontSize: 16,
+    color: '#FFF',
+    fontSize: 20,
     fontFamily: 'negrito',
   },
 });
