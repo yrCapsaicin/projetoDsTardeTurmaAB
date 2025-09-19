@@ -19,3 +19,10 @@ def create_music(music: Music):
     new_music = {"id": len(fake_db) + 1, "name": music.name}
     fake_db.music.append(new_music)
     return new_music
+
+@router.put("/{music_id}")
+def update_music(music_id: int, music: Music):
+    if music_id > len(fake_db):
+        return {"error": "Music not found"}
+    fake_db.musics[music_id - 1] = {"id": music_id, "name": music.name}
+    return {"message": "Music updated"}
