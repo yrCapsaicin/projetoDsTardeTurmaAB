@@ -1,6 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
+
 import {
   SafeAreaView,
   StatusBar,
@@ -9,6 +10,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Image,
 } from 'react-native';
 
 const Cadastro = () => {
@@ -33,13 +35,13 @@ const Cadastro = () => {
   return (
     <LinearGradient
       colors={['#8000d5','#f910a3', '#fddf00']}
-      
       style={styles.container}
-      
-    >
+    >  
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <View style={styles.formContainer}>
+      <View style={styles.logoContainer}>
+
         <Text style={styles.titulo}>Cadastro</Text>
 
        
@@ -75,7 +77,7 @@ const Cadastro = () => {
           <Text style={styles.textoBotao}>Login</Text>
         </TouchableOpacity>
 
-        
+         </View>
       </View>
     </SafeAreaView>
     </LinearGradient>
@@ -102,16 +104,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   input: {
-    height: 35,
-    
-    borderRadius: 20,
-   
+    height: 45, 
+    borderRadius: 25,
     paddingHorizontal: 20,
-    fontSize: 16,
+    fontSize: 19,
     fontFamily: 'normal',
-    borderWidth: 1,
+    borderWidth: 2,
+    textAlign: 'center',
     borderColor: '#FFF',
-    marginTop: 30,
+    marginTop: 23,
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
