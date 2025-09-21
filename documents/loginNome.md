@@ -9,3 +9,4 @@ CaioVBCosta -> Caio Vitor de Brito Costa
 G4br1el7 -> Gabriel Sousa Freitas
 alissonseabra -> Alisson de Sousa Seabra
 gkfgis -> Matheus Pascheto
+Geistch -> Gustavo Martins de Carvalho Santos Ribeiro
