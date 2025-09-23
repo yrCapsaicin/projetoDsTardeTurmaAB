@@ -1,32 +1,20 @@
-import React, { useState } from "react";
-import { Text, TouchableOpacity, TextInput, View, StyleSheet, KeyboardAvoidingView, Platform, SafeAreaView,useWindowDimensions} from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { useRouter } from "expo-router";
+import { LinearGradient } from 'expo-linear-gradient';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-export default function LoginScreen() {
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
 
-  const router = useRouter();
 
-  const { width, height } = useWindowDimensions();
-
-  const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
-
-  const rf = (size) =>
-    Math.round(clamp(size * (width / 375), Math.max(12, size * 0.85), size * 1.6));
-
-  const containerPadding = Math.max(12, width * 0.06);
-  const maxContentWidth = Math.min(width * 0.94, 720);
-
+export default function Index() {
+  function cadastro() {
+    roteador.push('/cadastrar');
+  }
   function entrar() {
     router.push("/uploadMusic");
   }
 
-    function cadastro() {
+  function cadastro() {
     router.push("/cadastrar");
   }
-  
+
 
   return (
     <LinearGradient
