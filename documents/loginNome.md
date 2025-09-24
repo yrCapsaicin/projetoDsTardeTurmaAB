@@ -10,6 +10,7 @@ CaioVBCosta -> Caio Vitor de Brito Costa
 G4br1el7 -> Gabriel Sousa Freitas
 alissonseabra -> Alisson de Sousa Seabra
 gkfgis -> Matheus Pascheto
+NicolasAN1 -> Nicolas Alves de Castro
 Geistch -> Gustavo Martins de Carvalho Santos Ribeiro
 yrCapsaicin -> Lynn Dias da Rocha
 miguel-pereita -> Miguel Santos Pereira  
