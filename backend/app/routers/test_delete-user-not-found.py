@@ -7,3 +7,5 @@ def test_delete_nonexistent_user():
     response = client.delete("/users/999")
     assert response.status_code == 200
     assert response.json()["error"] == "User not found"
+    list_response = client.get("/users/")
+    assert isinstance(list_response.json(), list)
