@@ -1,5 +1,4 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 
@@ -9,130 +8,139 @@ export default function Index() {
     roteador.push('/cadastrar');
   }
   function entrar() {
-    roteador.push('/uploadMusic');
+    router.push("/uploadMusic");
   }
 
-  const roteador = useRouter();
+  function cadastro() {
+    router.push("/cadastrar");
+  }
+
 
   return (
     <LinearGradient
-         colors={['#8000d5','#f910a3', '#fddf00']}
-         
-          style={styles.container}
+      colors={["#fedea6", "#fc7ea7", "#7466e6"]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={{ flex: 1 }}
+    >
+      <SafeAreaView style={{ flex: 1 }}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={{ flex: 1 }}
         >
-    <View style={styles.container}>
+          <View
+            style={[
+              styles.innerContainer,
+              {
+                paddingHorizontal: containerPadding,
+                maxWidth: maxContentWidth,
+                alignSelf: "center",
+              },
+            ]}
+          >
+            <Text
+              style={[
+                styles.title,
+                { fontSize: rf(26), marginBottom: Math.max(8, height * 0.01) },
+              ]}
+            >
+              Descubra Música Local
+            </Text>
+            <Text style={[styles.subtitle, { fontSize: rf(15) }]}>
+              Conecte-se com artistas da sua região
+            </Text>
 
+            <Text style={[styles.label, { fontSize: rf(14) }]}>Email</Text>
+            <TextInput
+              style={[
+                styles.input,
+                { height: clamp(height * 0.065, 48, 68), fontSize: rf(16) },
+              ]}
+              placeholder="email@exemplo.com"
+              placeholderTextColor="#666"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
+            />
 
-      <Text style={styles.title}>Login</Text>
-    
+            <Text style={[styles.label, { fontSize: rf(14) }]}>Senha</Text>
+            <TextInput
+              style={[
+                styles.input,
+                { height: clamp(height * 0.065, 48, 68), fontSize: rf(16) },
+              ]}
+              placeholder="••••••••"
+              placeholderTextColor="#666"
+              secureTextEntry
+              value={senha}
+              onChangeText={setSenha}
+            />
 
+            <TouchableOpacity
+              style={[
+                styles.button,
+                { paddingVertical: clamp(height * 0.02, 12, 20) },
+              ]}
+              onPress={entrar}
+            >
+              <Text style={[styles.buttonText, { fontSize: rf(16) }]}>Entrar</Text>
+            </TouchableOpacity >
 
-      <View style={styles.form}>
-
-        <View style={styles.inputBlock}>
-          
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            placeholderTextColor="#FFF"
-            keyboardType="email-address"
-          />
-        </View>
-
-
-        <View style={styles.inputBlock}>
-          <TextInput
-            style={styles.input}
-            placeholder="Senha"
-            secureTextEntry={true}
-            placeholderTextColor="#FFF"
-          />
-        </View>
-      </View>
-
-      <TouchableOpacity style={styles.button} onPress={entrar}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-
-
-      <TouchableOpacity onPress={cadastro}>
-        <Text style={styles.footer}>
-          Não tem uma conta?{' '}
-          <Text style={styles.footerLink}>Cadastre-se</Text>
-        </Text>
-      </TouchableOpacity>
-    </View>
+            <TouchableOpacity onPress={cadastro}>
+              <Text style={[styles.footer, { fontSize: rf(14) }]}>
+                Não tem uma conta? <Text style={styles.footerLink}>Cadastre-se</Text>
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  innerContainer: {
     flex: 1,
-    paddingHorizontal: 24,
-    justifyContent: 'center',
-
+    justifyContent: "center",
+    width: "100%",
   },
-  inputBlock: {
-    marginBottom: 20,
-  },
- 
-  form: {
-    marginTop: 150,
-  },
-  input: {
-    height: 35,
-    borderRadius: 30,
-    paddingHorizontal: 20,
-    fontSize: 16,
-    fontFamily: "normal",
-    borderWidth: 2,
-    borderColor: "#FFF",
-    marginTop: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 5,
+  title: {
+    color: "#fff",
+    fontWeight: "bold",
     textAlign: "center",
   },
+  subtitle: {
+    color: "#fff",
+    textAlign: "center",
+    marginBottom: 30,
+  },
+  label: {
+    color: "#fff",
+    marginBottom: 6,
+  },
+  input: {
+    backgroundColor: "rgba(255,255,255,0.9)",
+    borderRadius: 8,
+    paddingHorizontal: 14,
+    marginBottom: 16,
+    color: "#333",
+  },
   button: {
-    backgroundColor: '#1d1436',
-    paddingVertical: 8,
-    borderRadius: 50,
-    borderWidth: 1,
-    borderColor: '#8000d5',
-    alignItems: 'center',
-    marginTop: 30,
+    backgroundColor: "#5a4ae3",
+    borderRadius: 8,
+    alignItems: "center",
     marginBottom: 20,
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontFamily: 'negrito',
-  },
-  title: {
-    fontSize: 26,
-    fontFamily: 'negrito',
-    color: '#fff',
-    textAlign: 'center',
-  },
-  subtitle:{
-    fontSize:15,
-    fontFamily: 'normal',
-    color: '#666',
-    textAlign: 'center',
-    marginTop: 8,
+    color: "#fff",
+    fontWeight: "600",
   },
   footer: {
-    fontSize: 14,
-    textAlign: 'center',
-    color: '#666',
-    fontFamily: 'normal',
+    color: "#fff",
+    textAlign: "center",
   },
   footerLink: {
-    color: '#333',
-    fontFamily: 'negrito',
-    textDecorationLine: 'underline',
+    fontWeight: "bold",
+    textDecorationLine: "underline",
   },
 });
