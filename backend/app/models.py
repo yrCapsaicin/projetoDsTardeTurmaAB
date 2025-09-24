@@ -30,3 +30,4 @@ class Music(BaseModel):
 class Styles(BaseModel):
     id: int
     name: str
+    genre: str
