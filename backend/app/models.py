@@ -37,4 +37,4 @@ class User_music_ratings(BaseModel):
     music_id: int
     rating: int
     created_at: date
-    
+    genre: str
