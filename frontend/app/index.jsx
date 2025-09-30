@@ -7,6 +7,11 @@ export default function Index() {
   function cadastro() {
     roteador.push('/cadastrar');
   }
+  
+  function curtidas(){
+    roteador.push( '/curtidas');
+  }
+  
   function entrar() {
     router.push("/uploadMusic");
   }
@@ -14,8 +19,6 @@ export default function Index() {
   function cadastro() {
     router.push("/cadastrar");
   }
-
-
   return (
     <LinearGradient
       colors={["#fedea6", "#fc7ea7", "#7466e6"]}
@@ -86,6 +89,20 @@ export default function Index() {
               <Text style={[styles.buttonText, { fontSize: rf(16) }]}>Entrar</Text>
             </TouchableOpacity >
 
+      <TouchableOpacity onPress={curtidas}>
+      <Text style={styles.footer}>
+          Quer musicas curtidas?{' '}
+          <Text style={styles.footerLink}>Relembres-se</Text>
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={cadastro}>
+        <Text style={styles.footer}>
+          Não tem uma conta?{' '}
+          <Text style={styles.footerLink}>Cadastre-se</Text>
+        </Text>
+      </TouchableOpacity>
+    </View>
             <TouchableOpacity onPress={cadastro}>
               <Text style={[styles.footer, { fontSize: rf(14) }]}>
                 Não tem uma conta? <Text style={styles.footerLink}>Cadastre-se</Text>
