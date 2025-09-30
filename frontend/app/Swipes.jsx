@@ -7,17 +7,22 @@ import {
   Animated,
   PanResponder,
   ScrollView,
+  SafeAreaView,
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
-const SQUARE_WIDTH = width * 0.8;
-const SQUARE_HEIGHT = height * 0.6;
 
 const profiles = [
   { id: 1, name: 'Perfil 1' },
   { id: 2, name: 'Perfil 2' },
   { id: 3, name: 'Perfil 3' },
   { id: 4, name: 'Perfil 4' },
+  { id: 5, name: 'Perfil 5' },
+  { id: 6, name: 'Perfil 6' },
+  { id: 7, name: 'Perfil 7' },
+  { id: 8, name: 'Perfil 8' },
+  { id: 9, name: 'Perfil 9' },
+  { id: 10, name: 'Perfil 10' },
 ];
 
 export default function TinderSwipeSquare() {
@@ -25,29 +30,6 @@ export default function TinderSwipeSquare() {
   const [likedProfiles, setLikedProfiles] = useState([]);
   const [dislikedProfiles, setDislikedProfiles] = useState([]);
   const position = useRef(new Animated.ValueXY()).current;
-
-  // Interpolations para os labels
-  const rotate = position.x.interpolate({
-    inputRange: [-width / 2, 0, width / 2],
-    outputRange: ['-15deg', '0deg', '15deg'],
-  });
-
-  const likeOpacity = position.x.interpolate({
-    inputRange: [0, width / 4],
-    outputRange: [0, 1],
-    extrapolate: 'clamp',
-  });
-
-  const dislikeOpacity = position.x.interpolate({
-    inputRange: [-width / 4, 0],
-    outputRange: [1, 0],
-    extrapolate: 'clamp',
-  });
-
-  const animatedStyle = {
-    transform: [...position.getTranslateTransform(), { rotate }],
-    marginHorizontal: 20,
-  };
 
   const panResponder = useRef(
     PanResponder.create({
@@ -59,7 +41,6 @@ export default function TinderSwipeSquare() {
 
       onPanResponderRelease: (evt, gesture) => {
         if (gesture.dx > 120) {
-          // Swipe right - Like
           Animated.timing(position, {
             toValue: { x: width * 1.5, y: gesture.dy },
             duration: 250,
@@ -68,7 +49,6 @@ export default function TinderSwipeSquare() {
             handleSwipe('right');
           });
         } else if (gesture.dx < -120) {
-          // Swipe left - Dislike
           Animated.timing(position, {
             toValue: { x: -width * 1.5, y: gesture.dy },
             duration: 250,
@@ -77,7 +57,6 @@ export default function TinderSwipeSquare() {
             handleSwipe('left');
           });
         } else {
-          // Voltar para centro
           Animated.spring(position, {
             toValue: { x: 0, y: 0 },
             useNativeDriver: false,
@@ -104,52 +83,85 @@ export default function TinderSwipeSquare() {
     setCurrentIndex((prev) => prev + 1);
   };
 
+ 
+  const rotate = position.x.interpolate({
+    inputRange: [-width / 2, 0, width / 2],
+    outputRange: ['-15deg', '0deg', '15deg'],
+  });
+
+  const likeOpacity = position.x.interpolate({
+    inputRange: [0, width / 4],
+    outputRange: [0, 1],
+    extrapolate: 'clamp',
+  });
+
+  const dislikeOpacity = position.x.interpolate({
+    inputRange: [-width / 4, 0],
+    outputRange: [1, 0],
+    extrapolate: 'clamp',
+  });
+
+  const animatedStyle = {
+    transform: [...position.getTranslateTransform(), { rotate }],
+    marginHorizontal: '5%',
+  };
+
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <View style={styles.container}>
-        {currentIndex < profiles.length ? (
-          <Animated.View
-            style={[styles.card, animatedStyle]}
-            {...panResponder.panHandlers}
-          >
-            {/* Label LIKE */}
-            <Animated.View style={[styles.likeLabel, { opacity: likeOpacity }]}>
-              <Text style={styles.likeText}>LIKE</Text>
-            </Animated.View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.container}>
+          {currentIndex < profiles.length ? (
+  <Animated.View
+    style={[styles.card, animatedStyle]}
+    {...panResponder.panHandlers}
+  >
+    <Animated.Text style={[styles.likeLabel, { opacity: likeOpacity }]}>
+      CURTIDA
+    </Animated.Text>
+    <Animated.Text
+      style={[styles.dislikeLabel, { opacity: dislikeOpacity }]}
+    >
+      DISLIKE
+    </Animated.Text>
 
-            {/* Label DISLIKE */}
-            <Animated.View style={[styles.dislikeLabel, { opacity: dislikeOpacity }]}>
-              <Text style={styles.dislikeText}>DISLIKE</Text>
-            </Animated.View>
+    <Text style={styles.profileName}>{profiles[currentIndex].name}</Text>
+    <Text style={styles.instruction}>Arraste para curtir ou rejeitar</Text>
+  </Animated.View>
+) : (
+  <View style={styles.resultsContainer}>
+    <Text style={styles.finished}>✨ Você chegou ao fim!</Text>
 
-            <Text style={styles.profileName}>
-              {profiles[currentIndex].name}
-            </Text>
-            <Text style={styles.instruction}>
-              Arraste para curtir ou rejeitar
-            </Text>
-          </Animated.View>
-        ) : (
-          <View style={styles.resultsContainer}>
-            <Text style={styles.finished}>Não há mais perfis</Text>
+    <View style={styles.resultBox}>
+      <Text style={styles.sectionTitle}>👍 Curtidos</Text>
+      {likedProfiles.length > 0 ? (
+        likedProfiles.map((profile) => (
+          <Text key={profile.id} style={styles.resultText}>
+            {profile.name}
+          </Text>
+        ))
+      ) : (
+        <Text style={styles.emptyText}>Nenhum perfil curtido</Text>
+      )}
+    </View>
 
-            <Text style={styles.sectionTitle}>👍 Curtidos:</Text>
-            {likedProfiles.map((profile) => (
-              <Text key={profile.id} style={styles.resultText}>
-                {profile.name}
-              </Text>
-            ))}
+    <View style={styles.resultBox}>
+      <Text style={styles.sectionTitle}>👎 Rejeitados</Text>
+      {dislikedProfiles.length > 0 ? (
+        dislikedProfiles.map((profile) => (
+          <Text key={profile.id} style={styles.resultText}>
+            {profile.name}
+          </Text>
+        ))
+      ) : (
+        <Text style={styles.emptyText}>Nenhum perfil rejeitado</Text>
+      )}
+    </View>
+  </View>
+)}
 
-            <Text style={styles.sectionTitle}>👎 Rejeitados:</Text>
-            {dislikedProfiles.map((profile) => (
-              <Text key={profile.id} style={styles.resultText}>
-                {profile.name}
-              </Text>
-            ))}
-          </View>
-        )}
-      </View>
-    </ScrollView>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -165,8 +177,12 @@ const styles = StyleSheet.create({
     paddingVertical: 40,
   },
   card: {
-    width: SQUARE_WIDTH,
-    height: SQUARE_HEIGHT,
+    width: width * 0.65,
+    maxWidth: 400,
+    minWidth: 250,
+    height: height * 0.75,
+    maxHeight: 650,
+    minHeight: 400,
     backgroundColor: '#f8f8f8',
     borderRadius: 20,
     elevation: 5,
@@ -178,14 +194,42 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  likeLabel: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: 'green',
+    borderWidth: 2,
+    borderColor: 'green',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 8,
+  },
+  dislikeLabel: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: 'red',
+    borderWidth: 2,
+    borderColor: 'red',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 8,
+  },
   profileName: {
-    fontSize: 28,
+    fontSize: Math.min(width * 0.07, 28),
     fontWeight: 'bold',
     marginBottom: 20,
+    textAlign: 'center',
   },
   instruction: {
-    fontSize: 16,
+    fontSize: Math.min(width * 0.045, 18),
     color: '#888',
+    textAlign: 'center',
   },
   finished: {
     fontSize: 22,
@@ -205,36 +249,53 @@ const styles = StyleSheet.create({
   resultsContainer: {
     alignItems: 'center',
   },
-  likeLabel: {
-    position: 'absolute',
-    top: 30,
-    left: 20,
-    transform: [{ rotate: '-20deg' }],
-    borderWidth: 2,
-    borderColor: 'green',
-    padding: 10,
-    borderRadius: 8,
-    backgroundColor: 'rgba(0,255,0,0.1)',
-  },
-  likeText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'green',
-  },
-  dislikeLabel: {
-    position: 'absolute',
-    top: 30,
-    right: 20,
-    transform: [{ rotate: '20deg' }],
-    borderWidth: 2,
-    borderColor: 'red',
-    padding: 10,
-    borderRadius: 8,
-    backgroundColor: 'rgba(255,0,0,0.1)',
-  },
-  dislikeText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'red',
-  },
+  finished: {
+  fontSize: 24,
+  fontWeight: 'bold',
+  color: '#444',
+  marginBottom: 25,
+  textAlign: 'center',
+},
+
+resultsContainer: {
+  flex: 1,
+  alignItems: 'center',
+  justifyContent: 'center',
+  paddingHorizontal: 20,
+},
+
+resultBox: {
+  width: '90%',
+  backgroundColor: '#f9f9f9',
+  borderRadius: 16,
+  padding: 15,
+  marginVertical: 10,
+  elevation: 3,
+  shadowColor: '#000',
+  shadowOpacity: 0.1,
+  shadowOffset: { width: 0, height: 3 },
+  shadowRadius: 6,
+},
+
+sectionTitle: {
+  fontSize: 20,
+  fontWeight: '600',
+  marginBottom: 10,
+  color: '#333',
+  textAlign: 'center',
+},
+
+resultText: {
+  fontSize: 16,
+  color: '#555',
+  marginTop: 6,
+  textAlign: 'center',
+},
+
+emptyText: {
+  fontSize: 14,
+  color: '#aaa',
+  fontStyle: 'italic',
+  textAlign: 'center',
+},
 });
