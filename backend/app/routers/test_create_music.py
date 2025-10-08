@@ -13,6 +13,9 @@ def test_create_music():
     }
     response = client.post("/api/musics/", json=music)
     assert response.status_code == 200
+    if response.status_code == 404:
+        print("Erro 404! Música não encontrada.")
+        return
     data = response.json()
     assert data["title"] == "Balada Nova"
     assert data["artist_id"] == 1
