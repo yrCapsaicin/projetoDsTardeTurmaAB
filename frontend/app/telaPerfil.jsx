@@ -5,8 +5,9 @@ import { LinearGradient } from "expo-linear-gradient";
 export default function Index() {
   const { width, height } = useWindowDimensions();
 
-  // Função simples para escalar valores proporcionalmente à largura da tela
-  const rf = (size) => Math.round(size * (width / 390));
+  // Função para limitar valores de tamanho
+  const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
+  const rf = (size) => Math.round(clamp(size * (width / 390), size * 12, size * 1.8));
 
   const paddingHorizontal = Math.max(16, width * 0.05);
   const paddingTop = Math.max(40, height * 0.06);
@@ -26,14 +27,8 @@ export default function Index() {
           paddingBottom: rf(40),
         }}
       >
-        {/* Header com botão voltar */}
-        <View
-          style={{
-            paddingTop,
-            paddingHorizontal,
-            paddingBottom: rf(20),
-          }}
-        >
+        {/* Header */}
+        <View style={{ paddingTop, paddingHorizontal, paddingBottom: rf(20) }}>
           <TouchableOpacity
             style={{
               width: rf(40),
@@ -48,9 +43,8 @@ export default function Index() {
           </TouchableOpacity>
         </View>
 
-        {/* Seção do perfil */}
+        {/* Perfil */}
         <View style={{ alignItems: "center", paddingHorizontal }}>
-          {/* Foto do perfil */}
           <View
             style={{
               width: rf(120),
@@ -65,7 +59,6 @@ export default function Index() {
             <Text style={{ color: "white", fontSize: rf(20) }}>👤</Text>
           </View>
 
-          {/* Nome do usuário */}
           <Text
             style={{
               color: "white",
@@ -78,7 +71,6 @@ export default function Index() {
             Fulano D'Town
           </Text>
 
-          {/* Estatísticas */}
           <Text
             style={{
               color: "white",
@@ -90,28 +82,20 @@ export default function Index() {
             23 seguidores • 4 seguindo
           </Text>
 
-          {/* Botão Seguir */}
           <TouchableOpacity
             style={{
               backgroundColor: "rgba(139, 69, 19, 0.8)",
-              paddingHorizontal: rf(40),
+              paddingHorizontal: width < 360 ? rf(30) : rf(40),
               paddingVertical: rf(12),
               borderRadius: rf(25),
               marginBottom: rf(20),
             }}
           >
-            <Text
-              style={{
-                color: "white",
-                fontSize: rf(16),
-                fontWeight: "bold",
-              }}
-            >
+            <Text style={{ color: "white", fontSize: rf(16), fontWeight: "bold" }}>
               Seguir +
             </Text>
           </TouchableOpacity>
 
-          {/* Info do usuário */}
           <Text
             style={{
               color: "white",
@@ -146,19 +130,13 @@ export default function Index() {
           </Text>
         </View>
 
-        {/* Tags de gêneros */}
-        <View
-          style={{
-            paddingHorizontal,
-            marginBottom: rf(30),
-          }}
-        >
+        {/* Tags */}
+        <View style={{ paddingHorizontal, marginBottom: rf(30) }}>
           <View
             style={{
               flexDirection: "row",
               flexWrap: "wrap",
               justifyContent: "space-between",
-              gap: rf(10),
             }}
           >
             {genres.map((genre, i) => (
@@ -170,7 +148,7 @@ export default function Index() {
                   paddingVertical: rf(10),
                   borderRadius: rf(20),
                   marginBottom: rf(10),
-                  width: "48%",
+                  width: width < 350 ? "100%" : "48%",
                 }}
               >
                 <Text
@@ -188,16 +166,9 @@ export default function Index() {
           </View>
         </View>
 
-        {/* Artistas mais ouvidos */}
+        {/* Artistas */}
         <View style={{ paddingHorizontal, paddingBottom: rf(40) }}>
-          <Text
-            style={{
-              color: "white",
-              fontSize: rf(20),
-              fontWeight: "bold",
-              marginBottom: rf(20),
-            }}
-          >
+          <Text style={{ color: "white", fontSize: rf(20), fontWeight: "bold", marginBottom: rf(20) }}>
             Artistas mais ouvidos
           </Text>
 
@@ -226,13 +197,7 @@ export default function Index() {
               >
                 <Text style={{ color: "white", fontSize: rf(12) }}>{artist.icon}</Text>
               </View>
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: rf(16),
-                  fontWeight: "500",
-                }}
-              >
+              <Text style={{ color: "white", fontSize: rf(16), fontWeight: "500" }}>
                 {artist.name}
               </Text>
             </TouchableOpacity>
