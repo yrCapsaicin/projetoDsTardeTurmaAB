@@ -7,7 +7,7 @@ def test_get_users():
     response = client.get("/users/")
     if response.status_code == 404:
         print("Erro 404! Usuário não encontrado.")
-        print("Response content:", create_response.json())
+        print("Response content:", response.json())
         return
     assert response.status_code == 200
     assert isinstance(response.json(), list)
@@ -16,7 +16,7 @@ def test_get_users():
     create_response = client.post("/users/", json=user)
     if create_response.status_code == 404:
         print("Erro 404! Usuário não encontrado.")
-        print("Response content:", response.json())
+        print("Response content:", create_responser.json())
         return
     assert create_response.status_code == 201
     created_user = create_response.json()
@@ -24,7 +24,7 @@ def test_get_users():
     updated_response = client.get("/users/")
     if updated_response.status_code == 404:
         print("Erro 404! Usuário não encontrado.")
-        print("Response content:", response.json())
+        print("Response content:", updated_response.json())
         return
     assert updated_response.status_code == 200
     users = updated_response.json()
