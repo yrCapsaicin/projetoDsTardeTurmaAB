@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Image, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 
 const Cadastro = () => {
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
 
   const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
   const rf = (size) => Math.round(clamp(size * (width / 390), 12, 28)); // escala responsiva
@@ -24,16 +24,16 @@ const Cadastro = () => {
         <StatusBar barStyle="dark-content" backgroundColor="#fff" />
 
         {/* Logo */}
-        <View style={[styles.logoContainer, { marginTop: rf(-50), marginBottom: rf(25) }]}>
-          <Image style={[styles.Logo, { width: rf(125), height: rf(125) }]} source={require('../assets/images/Logofundo.png')} />
+        <View style={[styles.logoContainer, { marginTop: rf(-50), marginBottom: rf(30) }]}>
+          <Image style={[styles.Logo, { width: rf(130), height: rf(130) }]} source={require('../assets/images/Logofundo.png')} />
         </View>
 
         {/* Form Container */}
         <View style={[styles.formContainer, { paddingHorizontal: rf(20) }]}>
-          <Text style={[styles.titulo, { fontSize: rf(27), marginBottom: rf(18) }]}>Cadastro</Text>
+          <Text style={[styles.titulo, { fontSize: rf(28), marginBottom: rf(20) }]}>Cadastro</Text>
 
           <TextInput
-            style={[styles.input, { width: width * 0.92, height: rf(48), fontSize: rf(18), paddingHorizontal: rf(15) }]}
+            style={[styles.input, { width: width * 0.9, height: rf(50), fontSize: rf(18), paddingHorizontal: rf(15) }]}
             placeholder="Nome de usuário"
             placeholderTextColor="#FFF"
             value={nome}
@@ -41,7 +41,7 @@ const Cadastro = () => {
           />
 
           <TextInput
-            style={[styles.input, { width: width * 0.92, height: rf(48), fontSize: rf(18), paddingHorizontal: rf(15) }]}
+            style={[styles.input, { width: width * 0.9, height: rf(50), fontSize: rf(18), paddingHorizontal: rf(15) }]}
             placeholder="Email"
             placeholderTextColor="#FFF"
             value={email}
@@ -50,7 +50,7 @@ const Cadastro = () => {
           />
 
           <TextInput
-            style={[styles.input, { width: width * 0.92, height: rf(48), fontSize: rf(18), paddingHorizontal: rf(15) }]}
+            style={[styles.input, { width: width * 0.9, height: rf(50), fontSize: rf(18), paddingHorizontal: rf(15) }]}
             placeholder="Senha"
             placeholderTextColor="#FFF"
             value={senha}
@@ -59,7 +59,7 @@ const Cadastro = () => {
           />
 
           <TouchableOpacity
-            style={[styles.botao, { width: width * 0.92, paddingVertical: rf(11), borderRadius: rf(50), marginTop: rf(22) }]}
+            style={[styles.botao, { width: width * 0.9, paddingVertical: rf(12), borderRadius: rf(50), marginTop: rf(25) }]}
             onPress={handleCadastro}
           >
             <Text style={[styles.textoBotao, { fontSize: rf(20) }]}>Login</Text>
@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     width: '100%',
+    maxWidth: 450, // limite para tablets e telas grandes
   },
   titulo: {
     fontFamily: 'negrito',
