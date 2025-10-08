@@ -4,6 +4,10 @@ import { LinearGradient } from "expo-linear-gradient";
 
 export default function Index() {
   const { width, height } = useWindowDimensions();
+
+  // Função simples para escalar valores proporcionalmente à largura da tela
+  const rf = (size) => Math.round(size * (width / 390));
+
   const paddingHorizontal = Math.max(16, width * 0.05);
   const paddingTop = Math.max(40, height * 0.06);
 
@@ -19,7 +23,7 @@ export default function Index() {
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{
-          paddingBottom: 40,
+          paddingBottom: rf(40),
         }}
       >
         {/* Header com botão voltar */}
@@ -27,20 +31,20 @@ export default function Index() {
           style={{
             paddingTop,
             paddingHorizontal,
-            paddingBottom: 20,
+            paddingBottom: rf(20),
           }}
         >
           <TouchableOpacity
             style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20,
+              width: rf(40),
+              height: rf(40),
+              borderRadius: rf(20),
               backgroundColor: "rgba(255,255,255,0.2)",
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            <Text style={{ color: "white", fontSize: 18 }}>←</Text>
+            <Text style={{ color: "white", fontSize: rf(18) }}>←</Text>
           </TouchableOpacity>
         </View>
 
@@ -49,25 +53,26 @@ export default function Index() {
           {/* Foto do perfil */}
           <View
             style={{
-              width: width * 0.3,
-              height: width * 0.3,
-              borderRadius: (width * 0.3) / 2,
+              width: rf(120),
+              height: rf(120),
+              borderRadius: rf(60),
               backgroundColor: "#4A5568",
-              marginBottom: 20,
+              marginBottom: rf(20),
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            <Text style={{ color: "white", fontSize: 18 }}>👤</Text>
+            <Text style={{ color: "white", fontSize: rf(20) }}>👤</Text>
           </View>
 
-          {/* Nome do usuário (observe o apóstrofo, sem backtick) */}
+          {/* Nome do usuário */}
           <Text
             style={{
               color: "white",
-              fontSize: width < 360 ? 20 : 24,
+              fontSize: rf(24),
               fontWeight: "bold",
-              marginBottom: 8,
+              marginBottom: rf(8),
+              textAlign: "center",
             }}
           >
             Fulano D'Town
@@ -77,8 +82,9 @@ export default function Index() {
           <Text
             style={{
               color: "white",
-              fontSize: width < 360 ? 14 : 16,
-              marginBottom: 20,
+              fontSize: rf(16),
+              marginBottom: rf(20),
+              textAlign: "center",
             }}
           >
             23 seguidores • 4 seguindo
@@ -88,16 +94,16 @@ export default function Index() {
           <TouchableOpacity
             style={{
               backgroundColor: "rgba(139, 69, 19, 0.8)",
-              paddingHorizontal: width < 360 ? 30 : 40,
-              paddingVertical: 12,
-              borderRadius: 25,
-              marginBottom: 20,
+              paddingHorizontal: rf(40),
+              paddingVertical: rf(12),
+              borderRadius: rf(25),
+              marginBottom: rf(20),
             }}
           >
             <Text
               style={{
                 color: "white",
-                fontSize: 16,
+                fontSize: rf(16),
                 fontWeight: "bold",
               }}
             >
@@ -109,8 +115,8 @@ export default function Index() {
           <Text
             style={{
               color: "white",
-              fontSize: 14,
-              marginBottom: 20,
+              fontSize: rf(14),
+              marginBottom: rf(20),
               textAlign: "center",
             }}
           >
@@ -123,16 +129,16 @@ export default function Index() {
           style={{
             marginHorizontal: paddingHorizontal,
             backgroundColor: "rgba(139, 69, 19, 0.6)",
-            borderRadius: 20,
-            padding: 20,
-            marginBottom: 20,
+            borderRadius: rf(20),
+            padding: rf(20),
+            marginBottom: rf(20),
           }}
         >
           <Text
             style={{
               color: "white",
-              fontSize: 16,
-              lineHeight: 24,
+              fontSize: rf(16),
+              lineHeight: rf(24),
               textAlign: "justify",
             }}
           >
@@ -144,7 +150,7 @@ export default function Index() {
         <View
           style={{
             paddingHorizontal,
-            marginBottom: 30,
+            marginBottom: rf(30),
           }}
         >
           <View
@@ -152,6 +158,7 @@ export default function Index() {
               flexDirection: "row",
               flexWrap: "wrap",
               justifyContent: "space-between",
+              gap: rf(10),
             }}
           >
             {genres.map((genre, i) => (
@@ -159,17 +166,17 @@ export default function Index() {
                 key={i}
                 style={{
                   backgroundColor: "rgba(255, 182, 193, 0.8)",
-                  paddingHorizontal: 20,
-                  paddingVertical: 10,
-                  borderRadius: 20,
-                  marginBottom: 10,
+                  paddingHorizontal: rf(20),
+                  paddingVertical: rf(10),
+                  borderRadius: rf(20),
+                  marginBottom: rf(10),
                   width: "48%",
                 }}
               >
                 <Text
                   style={{
                     color: "white",
-                    fontSize: 14,
+                    fontSize: rf(14),
                     textAlign: "center",
                     fontWeight: "500",
                   }}
@@ -182,13 +189,13 @@ export default function Index() {
         </View>
 
         {/* Artistas mais ouvidos */}
-        <View style={{ paddingHorizontal, paddingBottom: 40 }}>
+        <View style={{ paddingHorizontal, paddingBottom: rf(40) }}>
           <Text
             style={{
               color: "white",
-              fontSize: 20,
+              fontSize: rf(20),
               fontWeight: "bold",
-              marginBottom: 20,
+              marginBottom: rf(20),
             }}
           >
             Artistas mais ouvidos
@@ -201,28 +208,28 @@ export default function Index() {
                 flexDirection: "row",
                 alignItems: "center",
                 backgroundColor: "rgba(255, 182, 193, 0.6)",
-                borderRadius: 15,
-                padding: 15,
-                marginBottom: 10,
+                borderRadius: rf(15),
+                padding: rf(15),
+                marginBottom: rf(10),
               }}
             >
               <View
                 style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 20,
+                  width: rf(40),
+                  height: rf(40),
+                  borderRadius: rf(20),
                   backgroundColor: "#4A5568",
-                  marginRight: 15,
+                  marginRight: rf(15),
                   justifyContent: "center",
                   alignItems: "center",
                 }}
               >
-                <Text style={{ color: "white", fontSize: 12 }}>{artist.icon}</Text>
+                <Text style={{ color: "white", fontSize: rf(12) }}>{artist.icon}</Text>
               </View>
               <Text
                 style={{
                   color: "white",
-                  fontSize: 16,
+                  fontSize: rf(16),
                   fontWeight: "500",
                 }}
               >
