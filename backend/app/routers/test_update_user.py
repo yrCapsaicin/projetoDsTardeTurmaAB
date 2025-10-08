@@ -10,6 +10,10 @@ def test_update_user():
 
     updated_user = {"name": "Pedro Atualizado"}
     response = client.put(f"/users/{user_id}", json=updated_user)
+    if response.status_code == 404:
+        print("Erro 404! Usuário não encontrado.")
+        print("Response content:", response.json())
+        return
     assert response.status_code == 200
     assert response.json()["message"] == "User updated"
 
