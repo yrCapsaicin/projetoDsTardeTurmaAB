@@ -1,53 +1,66 @@
-import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, useWindowDimensions } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const ProfileScreen = () => {
   const { width } = useWindowDimensions();
 
   const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
-  const rf = (size) => Math.round(clamp(size * (width / 375), size * 0.85, size * 1.5));
+  const rf = (size) => Math.round(clamp(size * (width / 375), size * 0.9, size * 1.5));
 
   const paddingHorizontal = Math.max(12, width * 0.05);
 
   return (
     <View style={styles.container}>
-      {/* Cabeçalho */}
       <LinearGradient
         colors={['#FEC4C7', '#D9A6C4']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={[
           styles.header,
-          { padding: paddingHorizontal, borderBottomLeftRadius: rf(20), borderBottomRightRadius: rf(20) },
+          {
+            padding: paddingHorizontal,
+            borderBottomLeftRadius: rf(25),
+            borderBottomRightRadius: rf(25),
+            paddingBottom: rf(30),
+          },
         ]}
       >
-        <View style={[styles.profileInfo, { gap: rf(2) }]}>
-          <Text style={[styles.username, { fontSize: rf(24) }]}>Usuário</Text>
-          <Text style={[styles.email, { fontSize: rf(14) }]}>blabla@gmail.com</Text>
-          <Text style={[styles.memberSince, { fontSize: rf(12) }]}>Membro desde xx/xx/xxxx</Text>
-          <Text style={[styles.location, { fontSize: rf(14) }]}>São Paulo, SP</Text>
+        <Image
+          source={{ uri: 'https://cdn-icons-png.flaticon.com/512/149/149071.png' }}
+          style={[styles.profileImage, { width: rf(90), height: rf(90), borderRadius: rf(45) }]}
+        />
+
+        <View style={[styles.profileInfo, { gap: rf(3) }]}>
+          <Text style={[styles.username, { fontSize: rf(22) }]}>Usuário</Text>
+          <Text style={[styles.email, { fontSize: rf(13) }]}>blabla@gmail.com</Text>
+          <Text style={[styles.memberSince, { fontSize: rf(11) }]}>Membro desde xx/xx/xxxx</Text>
+          <Text style={[styles.location, { fontSize: rf(13) }]}>São Paulo, SP</Text>
         </View>
       </LinearGradient>
 
-      {/* Estatísticas */}
-      <View style={[styles.stats, { marginTop: rf(25), gap: rf(20), flexWrap: 'wrap' }]}>
+      <View style={[styles.stats, { marginTop: rf(35), gap: rf(30) }]}>
         <View style={styles.statItem}>
-          <Text style={[styles.statNumber, { fontSize: rf(24) }]}>0</Text>
-          <Text style={[styles.statLabel, { fontSize: rf(12) }]}>Músicas Curtidas</Text>
+          <Text style={[styles.statNumber, { fontSize: rf(26) }]}>0</Text>
+          <Text style={[styles.statLabel, { fontSize: rf(13) }]}>Músicas Curtidas</Text>
         </View>
         <View style={styles.statItem}>
-          <Text style={[styles.statNumber, { fontSize: rf(24) }]}>0</Text>
-          <Text style={[styles.statLabel, { fontSize: rf(12) }]}>Artistas Descobertos</Text>
+          <Text style={[styles.statNumber, { fontSize: rf(26) }]}>0</Text>
+          <Text style={[styles.statLabel, { fontSize: rf(13) }]}>Artistas Descobertos</Text>
         </View>
       </View>
 
-      {/* Botão logout */}
       <TouchableOpacity
-        activeOpacity={0.8}
+        activeOpacity={0.85}
         style={[
           styles.logoutButton,
-          { paddingVertical: rf(12), marginTop: rf(40), borderRadius: rf(10), width: '70%' },
+          {
+            paddingVertical: rf(12),
+            marginTop: rf(50),
+            borderRadius: rf(12),
+            width: '75%',
+            elevation: 2,
+          },
         ]}
       >
         <Text style={[styles.logoutText, { fontSize: rf(16) }]}>Sair da Conta</Text>
@@ -64,12 +77,17 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  profileImage: {
+    marginBottom: 10,
   },
   profileInfo: {
-    flex: 1,
     alignItems: 'center',
   },
   username: {
@@ -88,9 +106,11 @@ const styles = StyleSheet.create({
   stats: {
     flexDirection: 'row',
     justifyContent: 'center',
+    flexWrap: 'wrap',
   },
   statItem: {
     alignItems: 'center',
+    minWidth: 120,
   },
   statNumber: {
     fontWeight: 'bold',
