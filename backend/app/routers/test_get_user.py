@@ -10,6 +10,10 @@ def test_get_user():
 
     user_id = created_user["id"]
     response = client.get(f"/users/{user_id}")
+    if response.status_code == 404:
+        print("Erro 404! Usuário não encontrado.")
+        print("Response content:", response.json())
+        return
     assert response.status_code == 200
     assert response.json()["id"] == user_id
     assert response.json()["name"] == "Jo�o"
