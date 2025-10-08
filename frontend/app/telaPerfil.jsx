@@ -5,9 +5,9 @@ import { LinearGradient } from "expo-linear-gradient";
 export default function Index() {
   const { width, height } = useWindowDimensions();
 
-  // Função para limitar valores de tamanho
+  // Função para escala responsiva com limite
   const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
-  const rf = (size) => Math.round(clamp(size * (width / 390), size * 12, size * 1.8));
+  const rf = (size) => Math.round(clamp(size * (width / 390), 12, 28));
 
   const paddingHorizontal = Math.max(16, width * 0.05);
   const paddingTop = Math.max(40, height * 0.06);
@@ -17,7 +17,13 @@ export default function Index() {
     { icon: "🎵", name: "Jackson do Pandeiro" },
     { icon: "🎸", name: "Nirvana" },
     { icon: "🎤", name: "Marilyn Manson" },
+    { icon: "🎷", name: "Miles Davis" },
+    { icon: "🎹", name: "Chick Corea" },
   ];
+
+  // Calcula colunas de artistas baseado na largura
+  const artistCols = width > 500 ? 3 : width > 350 ? 2 : 1;
+  const artistWidth = (width - paddingHorizontal * 2 - (artistCols - 1) * rf(10)) / artistCols;
 
   return (
     <LinearGradient colors={["#8B5CF6", "#EAB308"]} style={{ flex: 1 }}>
@@ -166,42 +172,52 @@ export default function Index() {
           </View>
         </View>
 
-        {/* Artistas */}
+        {/* Artistas responsivo em grid */}
         <View style={{ paddingHorizontal, paddingBottom: rf(40) }}>
-          <Text style={{ color: "white", fontSize: rf(20), fontWeight: "bold", marginBottom: rf(20) }}>
+          <Text
+            style={{
+              color: "white",
+              fontSize: rf(20),
+              fontWeight: "bold",
+              marginBottom: rf(20),
+            }}
+          >
             Artistas mais ouvidos
           </Text>
 
-          {artists.map((artist, i) => (
-            <TouchableOpacity
-              key={i}
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                backgroundColor: "rgba(255, 182, 193, 0.6)",
-                borderRadius: rf(15),
-                padding: rf(15),
-                marginBottom: rf(10),
-              }}
-            >
-              <View
+          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: rf(10) }}>
+            {artists.map((artist, i) => (
+              <TouchableOpacity
+                key={i}
                 style={{
-                  width: rf(40),
-                  height: rf(40),
-                  borderRadius: rf(20),
-                  backgroundColor: "#4A5568",
-                  marginRight: rf(15),
-                  justifyContent: "center",
+                  width: artistWidth,
+                  flexDirection: "row",
                   alignItems: "center",
+                  backgroundColor: "rgba(255, 182, 193, 0.6)",
+                  borderRadius: rf(15),
+                  padding: rf(12),
+                  marginBottom: rf(10),
                 }}
               >
-                <Text style={{ color: "white", fontSize: rf(12) }}>{artist.icon}</Text>
-              </View>
-              <Text style={{ color: "white", fontSize: rf(16), fontWeight: "500" }}>
-                {artist.name}
-              </Text>
-            </TouchableOpacity>
-          ))}
+                <View
+                  style={{
+                    width: rf(40),
+                    height: rf(40),
+                    borderRadius: rf(20),
+                    backgroundColor: "#4A5568",
+                    marginRight: rf(10),
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={{ color: "white", fontSize: rf(12) }}>{artist.icon}</Text>
+                </View>
+                <Text style={{ color: "white", fontSize: rf(16), fontWeight: "500" }}>
+                  {artist.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
       </ScrollView>
     </LinearGradient>
