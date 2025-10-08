@@ -3,7 +3,11 @@ import React, { useState } from 'react';
 import { Image, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 
 const Cadastro = () => {
-  const { width } = useWindowDimensions(); // pega largura da tela
+  const { width, height } = useWindowDimensions();
+
+  const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
+  const rf = (size) => Math.round(clamp(size * (width / 390), 12, 28)); // escala responsiva
+
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -19,14 +23,14 @@ const Cadastro = () => {
       <SafeAreaView style={styles.container}>
         <StatusBar barStyle="dark-content" backgroundColor="#fff" />
         <View style={styles.formContainer}>
-          <View style={styles.logoContainer}>
-            <Image style={styles.Logo} source={require('../assets/images/Logofundo.png')} />
+          <View style={[styles.logoContainer, { marginTop: rf(-60), marginBottom: rf(30) }]}>
+            <Image style={[styles.Logo, { width: rf(120), height: rf(120) }]} source={require('../assets/images/Logofundo.png')} />
           </View>
 
-          <Text style={styles.titulo}>Cadastro</Text>
+          <Text style={[styles.titulo, { fontSize: rf(26), marginBottom: rf(20) }]}>Cadastro</Text>
 
           <TextInput
-            style={[styles.input, { width: width * 0.9 }]} // ajuste simples de responsividade
+            style={[styles.input, { width: width * 0.9, height: rf(45), fontSize: rf(18), paddingHorizontal: rf(15) }]}
             placeholder="Nome de usuário"
             placeholderTextColor="#FFF"
             value={nome}
@@ -34,7 +38,7 @@ const Cadastro = () => {
           />
 
           <TextInput
-            style={[styles.input, { width: width * 0.9 }]}
+            style={[styles.input, { width: width * 0.9, height: rf(45), fontSize: rf(18), paddingHorizontal: rf(15) }]}
             placeholder="Email"
             placeholderTextColor="#FFF"
             value={email}
@@ -43,7 +47,7 @@ const Cadastro = () => {
           />
 
           <TextInput
-            style={[styles.input, { width: width * 0.9 }]}
+            style={[styles.input, { width: width * 0.9, height: rf(45), fontSize: rf(18), paddingHorizontal: rf(15) }]}
             placeholder="Senha"
             placeholderTextColor="#FFF"
             value={senha}
@@ -51,8 +55,8 @@ const Cadastro = () => {
             secureTextEntry
           />
 
-          <TouchableOpacity style={[styles.botao, { width: width * 0.9 }]} onPress={handleCadastro}>
-            <Text style={styles.textoBotao}>Login</Text>
+          <TouchableOpacity style={[styles.botao, { width: width * 0.9, paddingVertical: rf(10), borderRadius: rf(50), marginTop: rf(25) }]} onPress={handleCadastro}>
+            <Text style={[styles.textoBotao, { fontSize: rf(20) }]}>Login</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -72,21 +76,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   titulo: {
-    fontSize: 26,
     fontFamily: 'negrito',
     color: '#fff',
     textAlign: 'center',
   },
   input: {
-    height: 45,
     borderRadius: 25,
-    paddingHorizontal: 20,
-    fontSize: 19,
-    fontFamily: 'normal',
     borderWidth: 2,
-    textAlign: 'center',
     borderColor: '#FFF',
+    textAlign: 'center',
     marginTop: 23,
+    fontFamily: 'normal',
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
@@ -95,29 +95,20 @@ const styles = StyleSheet.create({
   },
   botao: {
     backgroundColor: '#1d1436',
-    paddingVertical: 8,
     borderWidth: 1,
-    borderRadius: 50,
     borderColor: '#8000D5',
     alignItems: 'center',
-    marginTop: 30,
     marginBottom: 20,
   },
   textoBotao: {
     color: '#FFF',
-    fontSize: 20,
     fontFamily: 'negrito',
   },
   Logo: {
-    width: 150,
-    height: 150,
+    resizeMode: 'contain',
   },
   logoContainer: {
-    width: 150,
-    height: 150,
     alignSelf: 'center',
-    marginBottom: 50,
-    marginTop: -100,
   },
 });
 
