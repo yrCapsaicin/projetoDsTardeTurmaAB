@@ -8,7 +8,7 @@ def test_update_user():
     create_response = client.post("/users/", json=user)
     if create_response.status_code == 404:
         print("Erro 404! Usuário não encontrado.")
-        print("Response content:", response.json())
+        print("Response content:", create_response.json())
         return
     user_id = create_response.json()["id"]
 
