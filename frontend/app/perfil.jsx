@@ -3,15 +3,18 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, useWindowDimensions } 
 import { LinearGradient } from 'expo-linear-gradient';
 
 const ProfileScreen = () => {
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
 
+  // Escalonamento proporcional e limitado (evita exagero em telas muito grandes/pequenas)
   const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
-  const rf = (size) => Math.round(clamp(size * (width / 375), size * 0.9, size * 1.5));
+  const rf = (size) => Math.round(clamp(size * (width / 390), size * 0.9, size * 1.6));
 
-  const paddingHorizontal = Math.max(12, width * 0.05);
+  const paddingHorizontal = Math.max(16, width * 0.06);
+  const isSmallScreen = width < 360;
 
   return (
     <View style={styles.container}>
+      {/* Cabeçalho */}
       <LinearGradient
         colors={['#FEC4C7', '#D9A6C4']}
         start={{ x: 0, y: 0 }}
@@ -20,50 +23,70 @@ const ProfileScreen = () => {
           styles.header,
           {
             padding: paddingHorizontal,
-            borderBottomLeftRadius: rf(25),
-            borderBottomRightRadius: rf(25),
-            paddingBottom: rf(30),
+            borderBottomLeftRadius: rf(28),
+            borderBottomRightRadius: rf(28),
+            flexDirection: 'column',
+            gap: rf(10),
           },
         ]}
       >
         <Image
           source={{ uri: 'https://cdn-icons-png.flaticon.com/512/149/149071.png' }}
-          style={[styles.profileImage, { width: rf(90), height: rf(90), borderRadius: rf(45) }]}
+          style={[
+            styles.profileImage,
+            { width: rf(100), height: rf(100), borderRadius: rf(50), marginBottom: rf(5) },
+          ]}
+          resizeMode="cover"
         />
 
         <View style={[styles.profileInfo, { gap: rf(3) }]}>
-          <Text style={[styles.username, { fontSize: rf(22) }]}>Usuário</Text>
+          <Text style={[styles.username, { fontSize: rf(22 + (isSmallScreen ? -2 : 0)) }]}>Usuário</Text>
           <Text style={[styles.email, { fontSize: rf(13) }]}>blabla@gmail.com</Text>
-          <Text style={[styles.memberSince, { fontSize: rf(11) }]}>Membro desde xx/xx/xxxx</Text>
+          <Text style={[styles.memberSince, { fontSize: rf(12) }]}>Membro desde xx/xx/xxxx</Text>
           <Text style={[styles.location, { fontSize: rf(13) }]}>São Paulo, SP</Text>
         </View>
       </LinearGradient>
 
-      <View style={[styles.stats, { marginTop: rf(35), gap: rf(30) }]}>
-        <View style={styles.statItem}>
-          <Text style={[styles.statNumber, { fontSize: rf(26) }]}>0</Text>
-          <Text style={[styles.statLabel, { fontSize: rf(13) }]}>Músicas Curtidas</Text>
-        </View>
-        <View style={styles.statItem}>
-          <Text style={[styles.statNumber, { fontSize: rf(26) }]}>0</Text>
-          <Text style={[styles.statLabel, { fontSize: rf(13) }]}>Artistas Descobertos</Text>
-        </View>
+      {/* Estatísticas */}
+      <View
+        style={[
+          styles.stats,
+          {
+            marginTop: rf(35),
+            gap: rf(30),
+            flexWrap: 'wrap',
+            width: '100%',
+            paddingHorizontal: width * 0.1,
+          },
+        ]}
+      >
+        {[
+          { number: 0, label: 'Músicas Curtidas' },
+          { number: 0, label: 'Artistas Descobertos' },
+          { number: 0, label: 'Playlists Criadas' },
+        ].map((item, i) => (
+          <View key={i} style={[styles.statItem, { minWidth: rf(100) }]}>
+            <Text style={[styles.statNumber, { fontSize: rf(26) }]}>{item.number}</Text>
+            <Text style={[styles.statLabel, { fontSize: rf(13) }]}>{item.label}</Text>
+          </View>
+        ))}
       </View>
 
+      {/* Botão logout */}
       <TouchableOpacity
         activeOpacity={0.85}
         style={[
           styles.logoutButton,
           {
-            paddingVertical: rf(12),
-            marginTop: rf(50),
-            borderRadius: rf(12),
-            width: '75%',
-            elevation: 2,
+            paddingVertical: rf(14),
+            marginTop: rf(55),
+            borderRadius: rf(14),
+            width: width * 0.7,
+            elevation: 3,
           },
         ]}
       >
-        <Text style={[styles.logoutText, { fontSize: rf(16) }]}>Sair da Conta</Text>
+        <Text style={[styles.logoutText, { fontSize: rf(17) }]}>Sair da Conta</Text>
       </TouchableOpacity>
     </View>
   );
@@ -85,7 +108,8 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   profileImage: {
-    marginBottom: 10,
+    borderWidth: 2,
+    borderColor: '#fff',
   },
   profileInfo: {
     alignItems: 'center',
@@ -106,11 +130,9 @@ const styles = StyleSheet.create({
   stats: {
     flexDirection: 'row',
     justifyContent: 'center',
-    flexWrap: 'wrap',
   },
   statItem: {
     alignItems: 'center',
-    minWidth: 120,
   },
   statNumber: {
     fontWeight: 'bold',
@@ -118,6 +140,7 @@ const styles = StyleSheet.create({
   },
   statLabel: {
     color: '#D9A6C4',
+    textAlign: 'center',
   },
   logoutButton: {
     backgroundColor: '#F1A7D5',
