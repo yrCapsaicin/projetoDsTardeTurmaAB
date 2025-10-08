@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Image, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 
 const Cadastro = () => {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
   const rf = (size) => Math.round(clamp(size * (width / 390), 12, 28)); // escala responsiva
@@ -19,18 +19,21 @@ const Cadastro = () => {
   };
 
   return (
-    <LinearGradient colors={['#8000d5', '#f910a3', '#fddf00']} style={styles.container}>
+    <LinearGradient colors={['#8000d5', '#f910a3', '#fddf00']} style={styles.gradient}>
       <SafeAreaView style={styles.container}>
         <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-        <View style={styles.formContainer}>
-          <View style={[styles.logoContainer, { marginTop: rf(-60), marginBottom: rf(30) }]}>
-            <Image style={[styles.Logo, { width: rf(120), height: rf(120) }]} source={require('../assets/images/Logofundo.png')} />
-          </View>
 
-          <Text style={[styles.titulo, { fontSize: rf(26), marginBottom: rf(20) }]}>Cadastro</Text>
+        {/* Logo */}
+        <View style={[styles.logoContainer, { marginTop: rf(-50), marginBottom: rf(25) }]}>
+          <Image style={[styles.Logo, { width: rf(125), height: rf(125) }]} source={require('../assets/images/Logofundo.png')} />
+        </View>
+
+        {/* Form Container */}
+        <View style={[styles.formContainer, { paddingHorizontal: rf(20) }]}>
+          <Text style={[styles.titulo, { fontSize: rf(27), marginBottom: rf(18) }]}>Cadastro</Text>
 
           <TextInput
-            style={[styles.input, { width: width * 0.9, height: rf(45), fontSize: rf(18), paddingHorizontal: rf(15) }]}
+            style={[styles.input, { width: width * 0.92, height: rf(48), fontSize: rf(18), paddingHorizontal: rf(15) }]}
             placeholder="Nome de usuário"
             placeholderTextColor="#FFF"
             value={nome}
@@ -38,7 +41,7 @@ const Cadastro = () => {
           />
 
           <TextInput
-            style={[styles.input, { width: width * 0.9, height: rf(45), fontSize: rf(18), paddingHorizontal: rf(15) }]}
+            style={[styles.input, { width: width * 0.92, height: rf(48), fontSize: rf(18), paddingHorizontal: rf(15) }]}
             placeholder="Email"
             placeholderTextColor="#FFF"
             value={email}
@@ -47,7 +50,7 @@ const Cadastro = () => {
           />
 
           <TextInput
-            style={[styles.input, { width: width * 0.9, height: rf(45), fontSize: rf(18), paddingHorizontal: rf(15) }]}
+            style={[styles.input, { width: width * 0.92, height: rf(48), fontSize: rf(18), paddingHorizontal: rf(15) }]}
             placeholder="Senha"
             placeholderTextColor="#FFF"
             value={senha}
@@ -55,7 +58,10 @@ const Cadastro = () => {
             secureTextEntry
           />
 
-          <TouchableOpacity style={[styles.botao, { width: width * 0.9, paddingVertical: rf(10), borderRadius: rf(50), marginTop: rf(25) }]} onPress={handleCadastro}>
+          <TouchableOpacity
+            style={[styles.botao, { width: width * 0.92, paddingVertical: rf(11), borderRadius: rf(50), marginTop: rf(22) }]}
+            onPress={handleCadastro}
+          >
             <Text style={[styles.textoBotao, { fontSize: rf(20) }]}>Login</Text>
           </TouchableOpacity>
         </View>
@@ -65,15 +71,22 @@ const Cadastro = () => {
 };
 
 const styles = StyleSheet.create({
+  gradient: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
+  logoContainer: {
+    alignSelf: 'center',
+  },
+  Logo: {
+    resizeMode: 'contain',
+  },
   formContainer: {
     width: '100%',
-    maxWidth: 400,
-    paddingHorizontal: 20,
   },
   titulo: {
     fontFamily: 'negrito',
@@ -85,7 +98,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#FFF',
     textAlign: 'center',
-    marginTop: 23,
+    marginTop: 20,
     fontFamily: 'normal',
     shadowColor: "#000",
     shadowOpacity: 0.1,
@@ -98,17 +111,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#8000D5',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: rf(20),
   },
   textoBotao: {
     color: '#FFF',
     fontFamily: 'negrito',
-  },
-  Logo: {
-    resizeMode: 'contain',
-  },
-  logoContainer: {
-    alignSelf: 'center',
   },
 });
 
