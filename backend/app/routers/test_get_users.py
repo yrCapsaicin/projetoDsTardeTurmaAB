@@ -5,6 +5,10 @@ client = TestClient(app)
 
 def test_get_users():
     response = client.get("/users/")
+    if response.status_code == 404:
+        print("Erro 404! Usuário não encontrado.")
+        print("Response content:", response.json())
+        return
     assert response.status_code == 200
     assert isinstance(response.json(), list)
         

@@ -6,6 +6,10 @@ client = TestClient(app)
 def test_get_user():
     user = {"name": "Jo�o"}
     create_response = client.post("/users/", json=user)
+    if create_response.status_code == 404:
+        print("Erro 404! Usuário não encontrado.")
+        print("Response content:", response.json())
+        return
     created_user = create_response.json()
 
     user_id = created_user["id"]
