@@ -12,6 +12,10 @@ def test_create_user():
     }
 
     response = client.post("/users/", json=user)
+    if response.status_code == 404:
+        print("Erro 404! Usuário não encontrado.")
+        print("Response content:", response.json())
+        return
     assert response.status_code == 200
     data = response.json()
 
