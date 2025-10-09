@@ -1,15 +1,8 @@
 import { LinearGradient } from 'expo-linear-gradient';
-<<<<<<< HEAD
-import { useRouter } from 'expo-router';
-import { Button, KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-
-=======
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView, KeyboardAvoidingView, Platform } from "react-native";
-import { useState } from "react"; // Para gerenciar estado
 import { useRouter } from "expo-router"; // Certifique-se de que está usando o roteador correto
 import { clamp } from "lodash"; // Certifique-se de que lodash está instalado
-import { Dimensions } from "react-native";
->>>>>>> origin/main
+import { useState } from "react"; // Para gerenciar estado
+import { Dimensions, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 // Variáveis auxiliares
 const { height } = Dimensions.get("window");
@@ -18,25 +11,9 @@ const containerPadding = 16; // Ajuste conforme necessário
 const maxContentWidth = 400; // Ajuste conforme necessário
 
 export default function Index() {
-<<<<<<< HEAD
-  const router = useRouter();
-
-  function cadastro() {
-    roteador.push('/cadastrar');
-  }
-  
-  function curtidas(){
-    roteador.push( '/curtidas');
-  }
-  
-  function entrar() {
-    router.push("/uploadMusic");
-  }
-=======
   const router = useRouter(); // Use o roteador correto
   const [email, setEmail] = useState(""); // Estado para o email
   const [senha, setSenha] = useState(""); // Estado para a senha
->>>>>>> origin/main
 
   function fnHome() {
     router.push("/home");
@@ -51,14 +28,6 @@ export default function Index() {
   }
 
   return (
-<<<<<<< HEAD
-    <View>
-      <Button
-      title='Home'
-      onPress={fnHome}
-      />
-      </View>
-=======
     <LinearGradient
       colors={["#fedea6", "#fc7ea7", "#7466e6"]}
       start={{ x: 0, y: 0 }}
@@ -145,7 +114,6 @@ export default function Index() {
         </KeyboardAvoidingView>
       </SafeAreaView>
     </LinearGradient>
->>>>>>> origin/main
   );
 }
 
