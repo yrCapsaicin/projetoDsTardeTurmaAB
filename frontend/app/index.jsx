@@ -1,9 +1,12 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { useRouter } from 'expo-router';
+import { Button, KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 
 
 export default function Index() {
+  const router = useRouter();
+
   function cadastro() {
     roteador.push('/cadastrar');
   }
@@ -16,102 +19,16 @@ export default function Index() {
     router.push("/uploadMusic");
   }
 
-  function cadastro() {
-    router.push("/cadastrar");
+  function fnHome() {
+    router.push("/home");
   }
   return (
-    <LinearGradient
-      colors={["#fedea6", "#fc7ea7", "#7466e6"]}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={{ flex: 1 }}
-    >
-      <SafeAreaView style={{ flex: 1 }}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={{ flex: 1 }}
-        >
-          <View
-            style={[
-              styles.innerContainer,
-              {
-                paddingHorizontal: containerPadding,
-                maxWidth: maxContentWidth,
-                alignSelf: "center",
-              },
-            ]}
-          >
-            <Text
-              style={[
-                styles.title,
-                { fontSize: rf(26), marginBottom: Math.max(8, height * 0.01) },
-              ]}
-            >
-              Descubra Música Local
-            </Text>
-            <Text style={[styles.subtitle, { fontSize: rf(15) }]}>
-              Conecte-se com artistas da sua região
-            </Text>
-
-            <Text style={[styles.label, { fontSize: rf(14) }]}>Email</Text>
-            <TextInput
-              style={[
-                styles.input,
-                { height: clamp(height * 0.065, 48, 68), fontSize: rf(16) },
-              ]}
-              placeholder="email@exemplo.com"
-              placeholderTextColor="#666"
-              keyboardType="email-address"
-              value={email}
-              onChangeText={setEmail}
-            />
-
-            <Text style={[styles.label, { fontSize: rf(14) }]}>Senha</Text>
-            <TextInput
-              style={[
-                styles.input,
-                { height: clamp(height * 0.065, 48, 68), fontSize: rf(16) },
-              ]}
-              placeholder="••••••••"
-              placeholderTextColor="#666"
-              secureTextEntry
-              value={senha}
-              onChangeText={setSenha}
-            />
-
-            <TouchableOpacity
-              style={[
-                styles.button,
-                { paddingVertical: clamp(height * 0.02, 12, 20) },
-              ]}
-              onPress={entrar}
-            >
-              <Text style={[styles.buttonText, { fontSize: rf(16) }]}>Entrar</Text>
-            </TouchableOpacity >
-
-      <TouchableOpacity onPress={curtidas}>
-      <Text style={styles.footer}>
-          Quer musicas curtidas?{' '}
-          <Text style={styles.footerLink}>Relembres-se</Text>
-        </Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={cadastro}>
-        <Text style={styles.footer}>
-          Não tem uma conta?{' '}
-          <Text style={styles.footerLink}>Cadastre-se</Text>
-        </Text>
-      </TouchableOpacity>
-    </View>
-            <TouchableOpacity onPress={cadastro}>
-              <Text style={[styles.footer, { fontSize: rf(14) }]}>
-                Não tem uma conta? <Text style={styles.footerLink}>Cadastre-se</Text>
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </LinearGradient>
+    <View>
+      <Button
+      title='Home'
+      onPress={fnHome}
+      />
+      </View>
   );
 }
 
