@@ -1,93 +1,113 @@
-import { Text, View, ScrollView, TouchableOpacity } from "react-native"
-import { LinearGradient } from "expo-linear-gradient"
+import React from "react";
+import { Text, View, ScrollView, TouchableOpacity, useWindowDimensions } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function Index() {
+  const { width, height } = useWindowDimensions();
+
+  // Função para escala responsiva com limite
+  const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
+  const rf = (size) => Math.round(clamp(size * (width / 390), 12, 28));
+
+  const paddingHorizontal = Math.max(16, width * 0.05);
+  const paddingTop = Math.max(40, height * 0.06);
+
+  const genres = ["Rock", "Metal industrial", "Forró", "Glam Rock"];
+  const artists = [
+    { icon: "🎵", name: "Jackson do Pandeiro" },
+    { icon: "🎸", name: "Nirvana" },
+    { icon: "🎤", name: "Marilyn Manson" },
+    { icon: "🎷", name: "Miles Davis" },
+    { icon: "🎹", name: "Chick Corea" },
+  ];
+
+  // Calcula colunas de artistas baseado na largura
+  const artistCols = width > 500 ? 3 : width > 350 ? 2 : 1;
+  const artistWidth = (width - paddingHorizontal * 2 - (artistCols - 1) * rf(10)) / artistCols;
+
   return (
     <LinearGradient colors={["#8B5CF6", "#EAB308"]} style={{ flex: 1 }}>
-      <ScrollView style={{ flex: 1 }}>
-        {/* Header com botão voltar */}
-        <View style={{ paddingTop: 50, paddingHorizontal: 20, paddingBottom: 20 }}>
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{
+          paddingBottom: rf(40),
+        }}
+      >
+        {/* Header */}
+        <View style={{ paddingTop, paddingHorizontal, paddingBottom: rf(20) }}>
           <TouchableOpacity
             style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20,
+              width: rf(40),
+              height: rf(40),
+              borderRadius: rf(20),
               backgroundColor: "rgba(255,255,255,0.2)",
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            <Text style={{ color: "white", fontSize: 18 }}>←</Text>
+            <Text style={{ color: "white", fontSize: rf(18) }}>←</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Seção do perfil */}
-        <View style={{ alignItems: "center", paddingHorizontal: 20 }}>
-          {/* Foto do perfil */}
+        {/* Perfil */}
+        <View style={{ alignItems: "center", paddingHorizontal }}>
           <View
             style={{
-              width: 120,
-              height: 120,
-              borderRadius: 60,
+              width: rf(120),
+              height: rf(120),
+              borderRadius: rf(60),
               backgroundColor: "#4A5568",
-              marginBottom: 20,
+              marginBottom: rf(20),
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            <Text style={{ color: "white", fontSize: 16 }}>👤</Text>
+            <Text style={{ color: "white", fontSize: rf(20) }}>👤</Text>
           </View>
 
-          {/* Nome do usuário */}
           <Text
             style={{
               color: "white",
-              fontSize: 24,
+              fontSize: rf(24),
               fontWeight: "bold",
-              marginBottom: 8,
+              marginBottom: rf(8),
+              textAlign: "center",
             }}
           >
-            Fulano D`Town
+            Fulano D'Town
           </Text>
 
-          {/* Estatísticas */}
           <Text
             style={{
               color: "white",
-              fontSize: 16,
-              marginBottom: 20,
+              fontSize: rf(16),
+              marginBottom: rf(20),
+              textAlign: "center",
             }}
           >
             23 seguidores • 4 seguindo
           </Text>
 
-          {/* Botão Seguir */}
           <TouchableOpacity
             style={{
               backgroundColor: "rgba(139, 69, 19, 0.8)",
-              paddingHorizontal: 40,
-              paddingVertical: 12,
-              borderRadius: 25,
-              marginBottom: 20,
+              paddingHorizontal: width < 360 ? rf(30) : rf(40),
+              paddingVertical: rf(12),
+              borderRadius: rf(25),
+              marginBottom: rf(20),
             }}
           >
-            <Text
-              style={{
-                color: "white",
-                fontSize: 16,
-                fontWeight: "bold",
-              }}
-            >
+            <Text style={{ color: "white", fontSize: rf(16), fontWeight: "bold" }}>
               Seguir +
             </Text>
           </TouchableOpacity>
 
-          {/* Info do usuário */}
           <Text
             style={{
               color: "white",
-              fontSize: 14,
-              marginBottom: 20,
+              fontSize: rf(14),
+              marginBottom: rf(20),
+              textAlign: "center",
             }}
           >
             yrCapsaicin 🎵 naousoiphone
@@ -97,31 +117,27 @@ export default function Index() {
         {/* Bio */}
         <View
           style={{
-            marginHorizontal: 20,
+            marginHorizontal: paddingHorizontal,
             backgroundColor: "rgba(139, 69, 19, 0.6)",
-            borderRadius: 20,
-            padding: 20,
-            marginBottom: 20,
+            borderRadius: rf(20),
+            padding: rf(20),
+            marginBottom: rf(20),
           }}
         >
           <Text
             style={{
               color: "white",
-              fontSize: 16,
-              lineHeight: 24,
+              fontSize: rf(16),
+              lineHeight: rf(24),
+              textAlign: "justify",
             }}
           >
             eeeer amo ouçar musga{"\n"}amo tumati tamem
           </Text>
         </View>
 
-        {/* Tags de gêneros */}
-        <View
-          style={{
-            paddingHorizontal: 20,
-            marginBottom: 30,
-          }}
-        >
+        {/* Tags */}
+        <View style={{ paddingHorizontal, marginBottom: rf(30) }}>
           <View
             style={{
               flexDirection: "row",
@@ -129,213 +145,81 @@ export default function Index() {
               justifyContent: "space-between",
             }}
           >
-            <TouchableOpacity
-              style={{
-                backgroundColor: "rgba(255, 182, 193, 0.8)",
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                borderRadius: 20,
-                marginBottom: 10,
-                width: "48%",
-              }}
-            >
-              <Text
+            {genres.map((genre, i) => (
+              <TouchableOpacity
+                key={i}
                 style={{
-                  color: "white",
-                  fontSize: 14,
-                  textAlign: "center",
-                  fontWeight: "500",
+                  backgroundColor: "rgba(255, 182, 193, 0.8)",
+                  paddingHorizontal: rf(20),
+                  paddingVertical: rf(10),
+                  borderRadius: rf(20),
+                  marginBottom: rf(10),
+                  width: width < 350 ? "100%" : "48%",
                 }}
               >
-                Rock
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={{
-                backgroundColor: "rgba(255, 182, 193, 0.8)",
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                borderRadius: 20,
-                marginBottom: 10,
-                width: "48%",
-              }}
-            >
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: 14,
-                  textAlign: "center",
-                  fontWeight: "500",
-                }}
-              >
-                Metal industrial
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={{
-                backgroundColor: "rgba(255, 182, 193, 0.8)",
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                borderRadius: 20,
-                marginBottom: 10,
-                width: "48%",
-              }}
-            >
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: 14,
-                  textAlign: "center",
-                  fontWeight: "500",
-                }}
-              >
-                Forró
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={{
-                backgroundColor: "rgba(255, 182, 193, 0.8)",
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                borderRadius: 20,
-                marginBottom: 10,
-                width: "48%",
-              }}
-            >
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: 14,
-                  textAlign: "center",
-                  fontWeight: "500",
-                }}
-              >
-                Glam Rock
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={{
+                    color: "white",
+                    fontSize: rf(14),
+                    textAlign: "center",
+                    fontWeight: "500",
+                  }}
+                >
+                  {genre}
+                </Text>
+              </TouchableOpacity>
+            ))}
           </View>
         </View>
 
-        {/* Artistas mais ouvidos */}
-        <View style={{ paddingHorizontal: 20, paddingBottom: 40 }}>
+        {/* Artistas responsivo em grid */}
+        <View style={{ paddingHorizontal, paddingBottom: rf(40) }}>
           <Text
             style={{
               color: "white",
-              fontSize: 20,
+              fontSize: rf(20),
               fontWeight: "bold",
-              marginBottom: 20,
+              marginBottom: rf(20),
             }}
           >
             Artistas mais ouvidos
           </Text>
 
-          {/* Lista de artistas */}
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              backgroundColor: "rgba(255, 182, 193, 0.6)",
-              borderRadius: 15,
-              padding: 15,
-              marginBottom: 10,
-            }}
-          >
-            <View
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 20,
-                backgroundColor: "#4A5568",
-                marginRight: 15,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "white", fontSize: 12 }}>🎵</Text>
-            </View>
-            <Text
-              style={{
-                color: "white",
-                fontSize: 16,
-                fontWeight: "500",
-              }}
-            >
-              Jackson do Pandeiro
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              backgroundColor: "rgba(255, 182, 193, 0.6)",
-              borderRadius: 15,
-              padding: 15,
-              marginBottom: 10,
-            }}
-          >
-            <View
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 20,
-                backgroundColor: "#4A5568",
-                marginRight: 15,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "white", fontSize: 12 }}>🎸</Text>
-            </View>
-            <Text
-              style={{
-                color: "white",
-                fontSize: 16,
-                fontWeight: "500",
-              }}
-            >
-              Nirvana
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              backgroundColor: "rgba(255, 182, 193, 0.6)",
-              borderRadius: 15,
-              padding: 15,
-              marginBottom: 10,
-            }}
-          >
-            <View
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 20,
-                backgroundColor: "#4A5568",
-                marginRight: 15,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "white", fontSize: 12 }}>🎤</Text>
-            </View>
-            <Text
-              style={{
-                color: "white",
-                fontSize: 16,
-                fontWeight: "500",
-              }}
-            >
-              Marilyn Manson
-            </Text>
-          </TouchableOpacity>
+          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: rf(10) }}>
+            {artists.map((artist, i) => (
+              <TouchableOpacity
+                key={i}
+                style={{
+                  width: artistWidth,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  backgroundColor: "rgba(255, 182, 193, 0.6)",
+                  borderRadius: rf(15),
+                  padding: rf(12),
+                  marginBottom: rf(10),
+                }}
+              >
+                <View
+                  style={{
+                    width: rf(40),
+                    height: rf(40),
+                    borderRadius: rf(20),
+                    backgroundColor: "#4A5568",
+                    marginRight: rf(10),
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={{ color: "white", fontSize: rf(12) }}>{artist.icon}</Text>
+                </View>
+                <Text style={{ color: "white", fontSize: rf(16), fontWeight: "500" }}>
+                  {artist.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
       </ScrollView>
     </LinearGradient>
-  )
+  );
 }
