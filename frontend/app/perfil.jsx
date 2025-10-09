@@ -1,49 +1,57 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const ProfileScreen = () => {
-
-  const { width, height } = useWindowDimensions();
-
-  const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
-  const rf = (size) => Math.round(clamp(size * (width / 375), size * 0.85, size * 1.6));
-
-  const paddingHorizontal = Math.max(12, width * 0.05);
-
-
   return (
     <View style={styles.container}>
-      
-      <View style={[
-          styles.header,
-          { padding: paddingHorizontal, borderBottomLeftRadius: rf(20), borderBottomRightRadius: rf(20) },
-        ]}>
-        {/* COLOCAR IMAGEM */}
-        
+      {/* Cabeçalho com título "Perfil" */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Perfil</Text>
+      </View>
+
+      {/* Imagem de perfil e informações */}
+      <View style={styles.profileHeader}>
+        <Image
+          source={{ uri: 'https://placekitten.com/200/200' }} // Substitua com a URL da imagem do perfil
+          style={styles.profileImage}
+        />
         <View style={styles.profileInfo}>
-          <Text style={[styles.username, { fontSize: rf(24) }]}>Usuário</Text>
-          <Text style={[styles.email, { fontSize: rf(14) }]}>blabla@gmail.com</Text>
-          <Text style={[styles.memberSince, { fontSize: rf(12) }]}>Membro desde xx/xx/xxxx</Text>
-          <Text style={[styles.location, { fontSize: rf(14) }]}>São Paulo, SP</Text>
+          <Text style={styles.username}>Usuário</Text>
+          <Text style={styles.email}>blabla@gmail.com</Text>
+          <Text style={styles.memberSince}>Membro desde xx/xx/xxxx</Text>
+          <Text style={styles.location}>São Paulo, SP</Text>
         </View>
       </View>
 
       {/* Estatísticas do perfil */}
-      <View style={[styles.stats, { marginTop: rf(30) }]}>
+      <View style={styles.stats}>
         <View style={styles.statItem}>
-          <Text style={[styles.statNumber, { fontSize: rf(24) }]}>0</Text>
-          <Text style={[styles.statLabel, { fontSize: rf(12) }]}>Músicas Curtidas</Text>
+          <Text style={styles.statNumber}>0</Text>
+          <Text style={styles.statLabel}>Músicas Curtidas</Text>
         </View>
         <View style={styles.statItem}>
-          <Text style={[styles.statNumber, { fontSize: rf(24) }]}>0</Text>
-          <Text style={[styles.statLabel, { fontSize: rf(12) }]}>Artistas Descobertos</Text>
+          <Text style={styles.statNumber}>0</Text>
+          <Text style={styles.statLabel}>Artistas Descobertos</Text>
         </View>
       </View>
 
       {/* Botão de logout */}
-      <TouchableOpacity style={[styles.logoutButton, { paddingVertical: rf(12), marginTop: rf(40), borderRadius: rf(10) }]}>
-        <Text style={[styles.logoutText, { fontSize: rf(16) }]}>Sair da Conta</Text>
+      <TouchableOpacity style={styles.logoutButton}>
+        <Text style={styles.logoutText}>Sair da Conta</Text>
       </TouchableOpacity>
+
+      {/* Rodapé com 3 páginas */}
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.footerItem}>
+          <Text style={styles.footerText}>Player</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.footerItem}>
+          <Text style={styles.footerText}>Curtidas</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.footerItem}>
+          <Text style={styles.footerText}>Perfil</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -54,9 +62,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffd3e8',
   },
   header: {
+    backgroundColor: '#f7e6f0',
+    paddingTop: 20,
+    paddingBottom: 10,
+    alignItems: 'center',
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#441b34',
+  },
+  profileHeader: {
     flexDirection: 'row',
     padding: 20,
-    backgroundColor: 'linear-gradient(to right, #FEC4C7, #D9A6C4)', // Gradiente semelhante ao da imagem
+    backgroundColor: 'linear-gradient(to right, #FEC4C7, #D9A6C4)',
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
     alignItems: 'center',
@@ -91,6 +110,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 30,
+    height: 400,
   },
   statItem: {
     alignItems: 'center',
@@ -115,6 +135,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#fff',
     fontWeight: 'bold',
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+    backgroundColor: '#f7e6f0',
+  },
+  footerItem: {
+    padding: 10,
+  },
+  footerText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#441b34',
   },
 });
 
