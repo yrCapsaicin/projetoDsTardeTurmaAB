@@ -26,19 +26,23 @@ const profiles = [
 ];
 
 export default function TinderSwipeSquare() {
+  const { width, height } = useWindowDimensions();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [likedProfiles, setLikedProfiles] = useState([]);
   const [dislikedProfiles, setDislikedProfiles] = useState([]);
   const position = useRef(new Animated.ValueXY()).current;
 
+  const nextCard = () => {
+    position.setValue({ x: 0, y: 0 });
+    setCurrentIndex((prev) => (prev + 1) % profiles.length);
+  };
+
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
-
       onPanResponderMove: (evt, gestureState) => {
         position.setValue({ x: gestureState.dx, y: gestureState.dy });
       },
-
       onPanResponderRelease: (evt, gesture) => {
         if (gesture.dx > 120) {
           Animated.timing(position, {

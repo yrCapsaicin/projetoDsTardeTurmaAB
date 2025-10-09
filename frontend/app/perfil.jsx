@@ -1,4 +1,5 @@
 import React from 'react';
+<<<<<<< HEAD
 import { View, Text, StyleSheet, TouchableOpacity, Image, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -44,6 +45,29 @@ const ProfileScreen = () => {
           <Text style={[styles.email, { fontSize: rf(13) }]}>blabla@gmail.com</Text>
           <Text style={[styles.memberSince, { fontSize: rf(12) }]}>Membro desde xx/xx/xxxx</Text>
           <Text style={[styles.location, { fontSize: rf(13) }]}>São Paulo, SP</Text>
+=======
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+const ProfileScreen = () => {
+  return (
+    <View style={styles.container}>
+      {/* Cabeçalho com título "Perfil" */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Perfil</Text>
+      </View>
+
+      {/* Imagem de perfil e informações */}
+      <View style={styles.profileHeader}>
+        <Image
+          source={{ uri: 'https://placekitten.com/200/200' }} // Substitua com a URL da imagem do perfil
+          style={styles.profileImage}
+        />
+        <View style={styles.profileInfo}>
+          <Text style={styles.username}>Usuário</Text>
+          <Text style={styles.email}>blabla@gmail.com</Text>
+          <Text style={styles.memberSince}>Membro desde xx/xx/xxxx</Text>
+          <Text style={styles.location}>São Paulo, SP</Text>
+>>>>>>> origin/main
         </View>
       </LinearGradient>
 
@@ -72,6 +96,7 @@ const ProfileScreen = () => {
         ))}
       </View>
 
+<<<<<<< HEAD
       {/* Botão logout */}
       <TouchableOpacity
         activeOpacity={0.85}
@@ -87,7 +112,37 @@ const ProfileScreen = () => {
         ]}
       >
         <Text style={[styles.logoutText, { fontSize: rf(17) }]}>Sair da Conta</Text>
+=======
+      {/* Estatísticas do perfil */}
+      <View style={styles.stats}>
+        <View style={styles.statItem}>
+          <Text style={styles.statNumber}>0</Text>
+          <Text style={styles.statLabel}>Músicas Curtidas</Text>
+        </View>
+        <View style={styles.statItem}>
+          <Text style={styles.statNumber}>0</Text>
+          <Text style={styles.statLabel}>Artistas Descobertos</Text>
+        </View>
+      </View>
+
+      {/* Botão de logout */}
+      <TouchableOpacity style={styles.logoutButton}>
+        <Text style={styles.logoutText}>Sair da Conta</Text>
+>>>>>>> origin/main
       </TouchableOpacity>
+
+      {/* Rodapé com 3 páginas */}
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.footerItem}>
+          <Text style={styles.footerText}>Player</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.footerItem}>
+          <Text style={styles.footerText}>Curtidas</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.footerItem}>
+          <Text style={styles.footerText}>Perfil</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -96,6 +151,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffd3e8',
+<<<<<<< HEAD
+=======
+  },
+  header: {
+    backgroundColor: '#f7e6f0',
+    paddingTop: 20,
+    paddingBottom: 10,
+    alignItems: 'center',
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#441b34',
+  },
+  profileHeader: {
+    flexDirection: 'row',
+    padding: 20,
+    backgroundColor: 'linear-gradient(to right, #FEC4C7, #D9A6C4)',
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+>>>>>>> origin/main
     alignItems: 'center',
   },
   header: {
@@ -129,7 +205,13 @@ const styles = StyleSheet.create({
   },
   stats: {
     flexDirection: 'row',
+<<<<<<< HEAD
     justifyContent: 'center',
+=======
+    justifyContent: 'space-around',
+    marginTop: 30,
+    height: 400,
+>>>>>>> origin/main
   },
   statItem: {
     alignItems: 'center',
@@ -149,6 +231,20 @@ const styles = StyleSheet.create({
   logoutText: {
     color: '#fff',
     fontWeight: 'bold',
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+    backgroundColor: '#f7e6f0',
+  },
+  footerItem: {
+    padding: 10,
+  },
+  footerText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#441b34',
   },
 });
 

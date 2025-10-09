@@ -5,7 +5,7 @@ import { useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 
 export default function Upload() {
-  const roteador = useRouter()
+  const roteador = useRouter();
   const [selectedGenre, setSelectedGenre] = useState('');
   const [isGenreListVisible, setIsGenreListVisible] = useState(false);
 
