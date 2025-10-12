@@ -1,19 +1,22 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useMemo, useState } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View, Animated } from 'react-native';
+import React, { useMemo, useState, memo } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 
-const ProfileScreen = React.memo(() => {
+const ProfileScreen = memo(() => {
   const { width } = useWindowDimensions();
   const [pressingLogout, setPressingLogout] = useState(false);
 
+  // Função de escala proporcional otimizada e memoizada
   const rf = useMemo(
-    () => (size) => Math.round(Math.max(size * 0.9, Math.min(size * 1.6, size * (width / 390)))),
+    () => (size) =>
+      Math.round(Math.max(size * 0.9, Math.min(size * 1.6, size * (width / 390)))),
     [width]
   );
 
   const paddingHorizontal = Math.max(16, width * 0.06);
   const isSmallScreen = width < 360;
 
+  // Dados estáticos memoizados (evita re-renderizações)
   const statsData = useMemo(
     () => [
       { number: 0, label: 'Músicas Curtidas' },
@@ -22,6 +25,8 @@ const ProfileScreen = React.memo(() => {
     ],
     []
   );
+
+  const headerRadius = rf(28);
 
   return (
     <View style={styles.container}>
@@ -34,22 +39,22 @@ const ProfileScreen = React.memo(() => {
           styles.header,
           {
             padding: paddingHorizontal,
-            borderBottomLeftRadius: rf(28),
-            borderBottomRightRadius: rf(28),
+            borderBottomLeftRadius: headerRadius,
+            borderBottomRightRadius: headerRadius,
             gap: rf(10),
           },
         ]}
       >
         <Image
           source={{ uri: 'https://cdn-icons-png.flaticon.com/512/149/149071.png' }}
-          style={useMemo(() => ({
+          style={{
             width: rf(100),
             height: rf(100),
             borderRadius: rf(50),
             marginBottom: rf(5),
             borderWidth: 2,
             borderColor: '#fff',
-          }), [rf])}
+          }}
           resizeMode="cover"
         />
 
@@ -81,19 +86,21 @@ const ProfileScreen = React.memo(() => {
         ))}
       </View>
 
-      {/* Botão logout com feedback visual */}
+      {/* Botão logout */}
       <TouchableOpacity
         activeOpacity={0.85}
-        style={{
-          backgroundColor: pressingLogout ? '#d99ac1' : '#F1A7D5',
-          alignItems: 'center',
-          paddingVertical: rf(14),
-          marginTop: rf(55),
-          borderRadius: rf(14),
-          width: width * 0.7,
-          elevation: 3,
-          transform: [{ scale: pressingLogout ? 0.97 : 1 }],
-        }}
+        style={[
+          styles.logoutButton,
+          {
+            backgroundColor: pressingLogout ? '#d99ac1' : '#F1A7D5',
+            transform: [{ scale: pressingLogout ? 0.97 : 1 }],
+            paddingVertical: rf(14),
+            marginTop: rf(55),
+            borderRadius: rf(14),
+            width: width * 0.7,
+            elevation: 3,
+          },
+        ]}
         onPressIn={() => setPressingLogout(true)}
         onPressOut={() => setPressingLogout(false)}
       >
@@ -129,6 +136,7 @@ const styles = StyleSheet.create({
   location: { color: '#6b4b63' },
   statNumber: { fontWeight: 'bold', color: '#F1A7D5' },
   statLabel: { color: '#D9A6C4', textAlign: 'center' },
+  logoutButton: { alignItems: 'center' },
   logoutText: { color: '#fff', fontWeight: 'bold' },
   footer: { flexDirection: 'row', justifyContent: 'space-around', padding: 10, backgroundColor: '#f7e6f0' },
   footerItem: { padding: 10 },
