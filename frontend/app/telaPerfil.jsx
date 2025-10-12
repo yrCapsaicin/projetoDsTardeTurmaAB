@@ -56,8 +56,16 @@ export default function Index() {
   const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
   const rf = useMemo(() => (size) => Math.round(clamp(size * (width / 390), 12, 28)), [width]);
 
-  const paddingHorizontal = Math.max(16, width * 0.05);
-  const paddingTop = Math.max(40, height * 0.06);
+  // Memorizar paddings e tamanhos
+  const paddingHorizontal = useMemo(() => Math.max(16, width * 0.05), [width]);
+  const paddingTop = useMemo(() => Math.max(40, height * 0.06), [height]);
+  const artistCols = useMemo(() => (width > 500 ? 3 : width > 350 ? 2 : 1), [width]);
+  const artistWidth = useMemo(() => (width - paddingHorizontal * 2 - (artistCols - 1) * rf(10)) / artistCols, [
+    width,
+    paddingHorizontal,
+    artistCols,
+    rf,
+  ]);
 
   const genres = useMemo(() => ["Rock", "Metal industrial", "Forró", "Glam Rock"], []);
   const artists = useMemo(
@@ -70,9 +78,6 @@ export default function Index() {
     ],
     []
   );
-
-  const artistCols = width > 500 ? 3 : width > 350 ? 2 : 1;
-  const artistWidth = (width - paddingHorizontal * 2 - (artistCols - 1) * rf(10)) / artistCols;
 
   const styles = StyleSheet.create({
     scrollContent: { paddingBottom: rf(40) },
