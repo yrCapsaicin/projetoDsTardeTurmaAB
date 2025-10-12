@@ -2,10 +2,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import React, { useMemo } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 
-const ProfileScreen = () => {
+const ProfileScreen = React.memo(() => {
   const { width } = useWindowDimensions();
 
-  // Escalonamento responsivo simples e memoizado
   const rf = useMemo(
     () => (size) => Math.round(Math.max(size * 0.9, Math.min(size * 1.6, size * (width / 390)))),
     [width]
@@ -42,14 +41,14 @@ const ProfileScreen = () => {
       >
         <Image
           source={{ uri: 'https://cdn-icons-png.flaticon.com/512/149/149071.png' }}
-          style={{
+          style={useMemo(() => ({
             width: rf(100),
             height: rf(100),
             borderRadius: rf(50),
             marginBottom: rf(5),
             borderWidth: 2,
             borderColor: '#fff',
-          }}
+          }), [rf])}
           resizeMode="cover"
         />
 
@@ -107,7 +106,7 @@ const ProfileScreen = () => {
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#ffd3e8', alignItems: 'center' },
