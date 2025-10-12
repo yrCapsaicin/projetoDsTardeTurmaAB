@@ -117,26 +117,30 @@ export default function Index() {
     []
   );
 
-  const styles = StyleSheet.create({
-    scrollContent: { paddingBottom: rf(40) },
-    profileIcon: {
+  const scrollContentStyle = useMemo(() => ({ paddingBottom: rf(40) }), [rf]);
+  const profileIconStyle = useMemo(
+    () => ({
       justifyContent: "center",
       alignItems: "center",
       borderRadius: rf(60),
       backgroundColor: "#4A5568",
       marginBottom: rf(20),
-    },
-    bioBox: {
+    }),
+    [rf]
+  );
+  const bioBoxStyle = useMemo(
+    () => ({
       backgroundColor: "rgba(139, 69, 19, 0.6)",
       borderRadius: rf(20),
       padding: rf(20),
       marginBottom: rf(20),
-    },
-  });
+    }),
+    [rf]
+  );
 
   return (
     <LinearGradient colors={["#8B5CF6", "#EAB308"]} style={{ flex: 1 }}>
-      <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.scrollContent}>
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={scrollContentStyle}>
         {/* Header */}
         <View style={{ paddingTop, paddingHorizontal, paddingBottom: rf(20) }}>
           <HeaderButton rf={rf} />
@@ -144,7 +148,7 @@ export default function Index() {
 
         {/* Perfil */}
         <View style={{ alignItems: "center", paddingHorizontal }}>
-          <View style={[styles.profileIcon, { width: rf(120), height: rf(120) }]}>
+          <View style={[profileIconStyle, { width: rf(120), height: rf(120) }]}>
             <Text style={{ color: "white", fontSize: rf(20) }}>👤</Text>
           </View>
 
@@ -164,7 +168,7 @@ export default function Index() {
         </View>
 
         {/* Bio */}
-        <View style={[styles.bioBox, { marginHorizontal: paddingHorizontal }]}>
+        <View style={[bioBoxStyle, { marginHorizontal: paddingHorizontal }]}>
           <Text style={{ color: "white", fontSize: rf(16), lineHeight: rf(24), textAlign: "justify" }}>
             eeeer amo ouçar musga{"\n"}amo tumati tamem
           </Text>
