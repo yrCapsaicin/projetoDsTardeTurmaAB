@@ -1,9 +1,10 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useMemo } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View, Animated } from 'react-native';
 
 const ProfileScreen = React.memo(() => {
   const { width } = useWindowDimensions();
+  const [pressingLogout, setPressingLogout] = useState(false);
 
   const rf = useMemo(
     () => (size) => Math.round(Math.max(size * 0.9, Math.min(size * 1.6, size * (width / 390)))),
@@ -80,18 +81,21 @@ const ProfileScreen = React.memo(() => {
         ))}
       </View>
 
-      {/* Botão logout */}
+      {/* Botão logout com feedback visual */}
       <TouchableOpacity
         activeOpacity={0.85}
         style={{
-          backgroundColor: '#F1A7D5',
+          backgroundColor: pressingLogout ? '#d99ac1' : '#F1A7D5',
           alignItems: 'center',
           paddingVertical: rf(14),
           marginTop: rf(55),
           borderRadius: rf(14),
           width: width * 0.7,
           elevation: 3,
+          transform: [{ scale: pressingLogout ? 0.97 : 1 }],
         }}
+        onPressIn={() => setPressingLogout(true)}
+        onPressOut={() => setPressingLogout(false)}
       >
         <Text style={[styles.logoutText, { fontSize: rf(17) }]}>Sair da Conta</Text>
       </TouchableOpacity>
