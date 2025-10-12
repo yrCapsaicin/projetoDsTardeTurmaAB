@@ -1,9 +1,9 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
-import { Animated, Image, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View, useWindowDimensions, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { Animated, Image, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View, useWindowDimensions, KeyboardAvoidingView, Platform, ScrollView, Alert } from 'react-native';
 
 const Cadastro = () => {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const clamp = useCallback((val, min, max) => Math.max(min, Math.min(max, val)), []);
   const rf = useCallback((size) => Math.round(clamp(size * (width / 390), 12, 30)), [width, clamp]);
@@ -11,8 +11,12 @@ const Cadastro = () => {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [isPressing, setIsPressing] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const debounceRef = useRef(null);
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -22,11 +26,31 @@ const Cadastro = () => {
     }).start();
   }, []);
 
-  const handleCadastro = () => {
-    console.log('Nome:', nome);
-    console.log('Email:', email);
-    console.log('Senha:', senha);
+  const validateFields = () => {
+    const newErrors = {};
+    if (!nome.trim()) newErrors.nome = 'Informe um nome válido.';
+    if (!email.includes('@')) newErrors.email = 'Email inválido.';
+    if (senha.length < 6) newErrors.senha = 'A senha deve ter pelo menos 6 caracteres.';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
+
+  const handleCadastro = useCallback(() => {
+    if (loading) return; // previne duplo toque
+
+    if (!validateFields()) return;
+
+    setLoading(true);
+
+    clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      console.log('Nome:', nome);
+      console.log('Email:', email);
+      console.log('Senha:', senha);
+      Alert.alert('Cadastro', 'Usuário cadastrado com sucesso!');
+      setLoading(false);
+    }, 800);
+  }, [nome, email, senha, loading]);
 
   const dynamicStyles = useMemo(() => ({
     logoContainer: { marginTop: rf(-40), marginBottom: rf(20) },
@@ -44,20 +68,13 @@ const Cadastro = () => {
     titulo: { fontSize: rf(26), marginBottom: rf(20) },
   }), [width, rf]);
 
-  const [isPressing, setIsPressing] = useState(false);
-
   return (
     <LinearGradient colors={['#8000d5', '#f910a3', '#fddf00']} style={styles.gradient}>
       <SafeAreaView style={styles.safe}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={styles.flex}
-        >
-          <ScrollView
-            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}
-            keyboardShouldPersistTaps="handled"
-          >
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.flex}>
+          <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }} keyboardShouldPersistTaps="handled">
             <Animated.View style={{ opacity: fadeAnim, alignItems: 'center', width: '100%' }}>
+              
               {/* Logo */}
               <View style={[styles.logoContainer, dynamicStyles.logoContainer]}>
                 <Image
@@ -72,36 +89,55 @@ const Cadastro = () => {
                 <Text style={[styles.titulo, dynamicStyles.titulo]}>Cadastro</Text>
 
                 <TextInput
-                  style={[styles.input, dynamicStyles.input]}
+                  style={[
+                    styles.input,
+                    dynamicStyles.input,
+                    errors.nome && { borderColor: '#ff8080' },
+                  ]}
                   placeholder="Nome de usuário"
                   placeholderTextColor="#FFF"
                   value={nome}
-                  onChangeText={setNome}
-                  autoCapitalize="words"
-                  returnKeyType="next"
+                  onChangeText={(t) => {
+                    setNome(t);
+                    if (errors.nome) setErrors((e) => ({ ...e, nome: null }));
+                  }}
                 />
+                {errors.nome && <Text style={styles.error}>{errors.nome}</Text>}
 
                 <TextInput
-                  style={[styles.input, dynamicStyles.input]}
+                  style={[
+                    styles.input,
+                    dynamicStyles.input,
+                    errors.email && { borderColor: '#ff8080' },
+                  ]}
                   placeholder="Email"
                   placeholderTextColor="#FFF"
                   value={email}
-                  onChangeText={setEmail}
+                  onChangeText={(t) => {
+                    setEmail(t);
+                    if (errors.email) setErrors((e) => ({ ...e, email: null }));
+                  }}
                   keyboardType="email-address"
                   autoCapitalize="none"
-                  returnKeyType="next"
                 />
+                {errors.email && <Text style={styles.error}>{errors.email}</Text>}
 
                 <TextInput
-                  style={[styles.input, dynamicStyles.input]}
+                  style={[
+                    styles.input,
+                    dynamicStyles.input,
+                    errors.senha && { borderColor: '#ff8080' },
+                  ]}
                   placeholder="Senha"
                   placeholderTextColor="#FFF"
                   value={senha}
-                  onChangeText={setSenha}
+                  onChangeText={(t) => {
+                    setSenha(t);
+                    if (errors.senha) setErrors((e) => ({ ...e, senha: null }));
+                  }}
                   secureTextEntry
-                  autoCapitalize="none"
-                  returnKeyType="done"
                 />
+                {errors.senha && <Text style={styles.error}>{errors.senha}</Text>}
 
                 <TouchableOpacity
                   activeOpacity={0.85}
@@ -109,12 +145,16 @@ const Cadastro = () => {
                     styles.botao,
                     dynamicStyles.botao,
                     isPressing && { transform: [{ scale: 0.97 }], backgroundColor: '#26144d' },
+                    loading && { opacity: 0.7 },
                   ]}
+                  disabled={loading}
                   onPressIn={() => setIsPressing(true)}
                   onPressOut={() => setIsPressing(false)}
                   onPress={handleCadastro}
                 >
-                  <Text style={[styles.textoBotao, dynamicStyles.textoBotao]}>Cadastrar</Text>
+                  <Text style={[styles.textoBotao, dynamicStyles.textoBotao]}>
+                    {loading ? 'Enviando...' : 'Cadastrar'}
+                  </Text>
                 </TouchableOpacity>
               </View>
             </Animated.View>
@@ -152,6 +192,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textoBotao: { color: '#FFF', fontFamily: 'negrito' },
+  error: {
+    color: '#ff8080',
+    textAlign: 'center',
+    marginTop: 4,
+    fontFamily: 'normal',
+  },
 });
 
 export default Cadastro;
