@@ -1,12 +1,12 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useMemo, useState, memo } from 'react';
+import React, { useMemo, useState, memo, useCallback } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 
 const ProfileScreen = memo(() => {
   const { width } = useWindowDimensions();
   const [pressingLogout, setPressingLogout] = useState(false);
 
-  // Função de escala proporcional otimizada e memoizada
+  // Escala proporcional responsiva otimizada
   const rf = useMemo(
     () => (size) =>
       Math.round(Math.max(size * 0.9, Math.min(size * 1.6, size * (width / 390)))),
@@ -16,7 +16,7 @@ const ProfileScreen = memo(() => {
   const paddingHorizontal = Math.max(16, width * 0.06);
   const isSmallScreen = width < 360;
 
-  // Dados estáticos memoizados (evita re-renderizações)
+  // Dados estáticos
   const statsData = useMemo(
     () => [
       { number: 0, label: 'Músicas Curtidas' },
@@ -27,6 +27,10 @@ const ProfileScreen = memo(() => {
   );
 
   const headerRadius = rf(28);
+
+  // Evita recriação de handlers a cada render
+  const handlePressIn = useCallback(() => setPressingLogout(true), []);
+  const handlePressOut = useCallback(() => setPressingLogout(false), []);
 
   return (
     <View style={styles.container}>
@@ -88,7 +92,7 @@ const ProfileScreen = memo(() => {
 
       {/* Botão logout */}
       <TouchableOpacity
-        activeOpacity={0.85}
+        activeOpacity={0.9}
         style={[
           styles.logoutButton,
           {
@@ -101,8 +105,8 @@ const ProfileScreen = memo(() => {
             elevation: 3,
           },
         ]}
-        onPressIn={() => setPressingLogout(true)}
-        onPressOut={() => setPressingLogout(false)}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
       >
         <Text style={[styles.logoutText, { fontSize: rf(17) }]}>Sair da Conta</Text>
       </TouchableOpacity>
@@ -110,7 +114,11 @@ const ProfileScreen = memo(() => {
       {/* Rodapé */}
       <View style={styles.footer}>
         {['Player', 'Curtidas', 'Perfil'].map((label, i) => (
-          <TouchableOpacity key={i} style={styles.footerItem}>
+          <TouchableOpacity
+            key={i}
+            style={styles.footerItem}
+            activeOpacity={0.8}
+          >
             <Text style={styles.footerText}>{label}</Text>
           </TouchableOpacity>
         ))}
@@ -126,9 +134,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    elevation: 3,
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   username: { fontWeight: 'bold', color: '#441b34' },
   email: { color: '#380d26' },
@@ -138,7 +146,15 @@ const styles = StyleSheet.create({
   statLabel: { color: '#D9A6C4', textAlign: 'center' },
   logoutButton: { alignItems: 'center' },
   logoutText: { color: '#fff', fontWeight: 'bold' },
-  footer: { flexDirection: 'row', justifyContent: 'space-around', padding: 10, backgroundColor: '#f7e6f0' },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 12,
+    backgroundColor: '#f7e6f0',
+    width: '100%',
+    borderTopWidth: 1,
+    borderTopColor: '#e5c7da',
+  },
   footerItem: { padding: 10 },
   footerText: { fontSize: 14, fontWeight: 'bold', color: '#441b34' },
 });
