@@ -1,12 +1,12 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Image, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 
 const Cadastro = () => {
   const { width, height } = useWindowDimensions();
 
-  const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
-  const rf = (size) => Math.round(clamp(size * (width / 390), 12, 28)); // escala responsiva
+  const clamp = useCallback((val, min, max) => Math.max(min, Math.min(max, val)), []);
+  const rf = useCallback((size) => Math.round(clamp(size * (width / 390), 12, 28)), [width, clamp]); // responsivo
 
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
@@ -18,51 +18,72 @@ const Cadastro = () => {
     console.log('Senha:', senha);
   };
 
+  // 🔹 Estilos dinâmicos memorizados
+  const dynamicStyles = useMemo(() => ({
+    logoContainer: { marginTop: rf(-50), marginBottom: rf(30) },
+    logo: { width: rf(130), height: rf(130) },
+    formPadding: { paddingHorizontal: rf(20) },
+    input: { width: width * 0.9, height: rf(50), fontSize: rf(18), paddingHorizontal: rf(15) },
+    botao: { width: width * 0.9, paddingVertical: rf(12), borderRadius: rf(50), marginTop: rf(25) },
+    textoBotao: { fontSize: rf(20) }
+  }), [width, rf]);
+
   return (
     <LinearGradient colors={['#8000d5', '#f910a3', '#fddf00']} style={styles.gradient}>
       <SafeAreaView style={styles.container}>
         <StatusBar barStyle="dark-content" backgroundColor="#fff" />
 
         {/* Logo */}
-        <View style={[styles.logoContainer, { marginTop: rf(-50), marginBottom: rf(30) }]}>
-          <Image style={[styles.Logo, { width: rf(130), height: rf(130) }]} source={require('../assets/images/Logofundo.png')} />
+        <View style={[styles.logoContainer, dynamicStyles.logoContainer]}>
+          <Image
+            style={[styles.Logo, dynamicStyles.logo]}
+            source={require('../assets/images/Logofundo.png')}
+            accessibilityLabel="Logo do aplicativo"
+          />
         </View>
 
         {/* Form Container */}
-        <View style={[styles.formContainer, { paddingHorizontal: rf(20) }]}>
+        <View style={[styles.formContainer, dynamicStyles.formPadding]}>
           <Text style={[styles.titulo, { fontSize: rf(28), marginBottom: rf(20) }]}>Cadastro</Text>
 
           <TextInput
-            style={[styles.input, { width: width * 0.9, height: rf(50), fontSize: rf(18), paddingHorizontal: rf(15) }]}
+            style={[styles.input, dynamicStyles.input]}
             placeholder="Nome de usuário"
             placeholderTextColor="#FFF"
             value={nome}
             onChangeText={setNome}
+            accessibilityLabel="Campo para nome de usuário"
+            autoCapitalize="words"
           />
 
           <TextInput
-            style={[styles.input, { width: width * 0.9, height: rf(50), fontSize: rf(18), paddingHorizontal: rf(15) }]}
+            style={[styles.input, dynamicStyles.input]}
             placeholder="Email"
             placeholderTextColor="#FFF"
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
+            accessibilityLabel="Campo para email"
+            autoCapitalize="none"
           />
 
           <TextInput
-            style={[styles.input, { width: width * 0.9, height: rf(50), fontSize: rf(18), paddingHorizontal: rf(15) }]}
+            style={[styles.input, dynamicStyles.input]}
             placeholder="Senha"
             placeholderTextColor="#FFF"
             value={senha}
             onChangeText={setSenha}
             secureTextEntry
+            accessibilityLabel="Campo para senha"
+            autoCapitalize="none"
           />
 
           <TouchableOpacity
-            style={[styles.botao, { width: width * 0.9, paddingVertical: rf(12), borderRadius: rf(50), marginTop: rf(25) }]}
+            style={[styles.botao, dynamicStyles.botao]}
             onPress={handleCadastro}
+            accessibilityLabel="Botão de cadastro"
           >
-            <Text style={[styles.textoBotao, { fontSize: rf(20) }]}>Login</Text>
+            <Text style={[styles.textoBotao, dynamicStyles.textoBotao]}>Cadastrar</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -71,29 +92,12 @@ const Cadastro = () => {
 };
 
 const styles = StyleSheet.create({
-  gradient: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logoContainer: {
-    alignSelf: 'center',
-  },
-  Logo: {
-    resizeMode: 'contain',
-  },
-  formContainer: {
-    width: '100%',
-    maxWidth: 450, // limite para tablets e telas grandes
-  },
-  titulo: {
-    fontFamily: 'negrito',
-    color: '#fff',
-    textAlign: 'center',
-  },
+  gradient: { flex: 1 },
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  logoContainer: { alignSelf: 'center' },
+  Logo: { resizeMode: 'contain' },
+  formContainer: { width: '100%', maxWidth: 450 },
+  titulo: { fontFamily: 'negrito', color: '#fff', textAlign: 'center' },
   input: {
     borderRadius: 25,
     borderWidth: 2,
@@ -101,7 +105,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
     fontFamily: 'normal',
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
@@ -112,12 +116,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#8000D5',
     alignItems: 'center',
-    marginBottom: rf(20),
   },
-  textoBotao: {
-    color: '#FFF',
-    fontFamily: 'negrito',
-  },
+  textoBotao: { color: '#FFF', fontFamily: 'negrito' },
 });
 
 export default Cadastro;
