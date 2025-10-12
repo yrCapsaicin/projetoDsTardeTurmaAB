@@ -50,13 +50,51 @@ const ArtistItem = memo(({ artist, rf, artistWidth }) => (
   </TouchableOpacity>
 ));
 
+// Botão memoizado para o header
+const HeaderButton = memo(({ rf }) => {
+  const style = useMemo(
+    () => ({
+      width: rf(40),
+      height: rf(40),
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: rf(20),
+      backgroundColor: "rgba(255,255,255,0.2)",
+    }),
+    [rf]
+  );
+  return (
+    <TouchableOpacity style={style}>
+      <Text style={{ color: "white", fontSize: rf(18) }}>←</Text>
+    </TouchableOpacity>
+  );
+});
+
+// Botão memoizado “Seguir +”
+const FollowButton = memo(({ rf, width }) => {
+  const style = useMemo(
+    () => ({
+      backgroundColor: "rgba(139, 69, 19, 0.8)",
+      paddingHorizontal: width < 360 ? rf(30) : rf(40),
+      paddingVertical: rf(12),
+      borderRadius: rf(25),
+      marginBottom: rf(20),
+    }),
+    [rf, width]
+  );
+  return (
+    <TouchableOpacity style={style}>
+      <Text style={{ color: "white", fontSize: rf(16), fontWeight: "bold" }}>Seguir +</Text>
+    </TouchableOpacity>
+  );
+});
+
 export default function Index() {
   const { width, height } = useWindowDimensions();
 
   const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
   const rf = useMemo(() => (size) => Math.round(clamp(size * (width / 390), 12, 28)), [width]);
 
-  // Memorizar paddings e tamanhos
   const paddingHorizontal = useMemo(() => Math.max(16, width * 0.05), [width]);
   const paddingTop = useMemo(() => Math.max(40, height * 0.06), [height]);
   const artistCols = useMemo(() => (width > 500 ? 3 : width > 350 ? 2 : 1), [width]);
@@ -81,12 +119,6 @@ export default function Index() {
 
   const styles = StyleSheet.create({
     scrollContent: { paddingBottom: rf(40) },
-    headerButton: {
-      justifyContent: "center",
-      alignItems: "center",
-      borderRadius: rf(20),
-      backgroundColor: "rgba(255,255,255,0.2)",
-    },
     profileIcon: {
       justifyContent: "center",
       alignItems: "center",
@@ -107,9 +139,7 @@ export default function Index() {
       <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.scrollContent}>
         {/* Header */}
         <View style={{ paddingTop, paddingHorizontal, paddingBottom: rf(20) }}>
-          <TouchableOpacity style={[styles.headerButton, { width: rf(40), height: rf(40) }]}>
-            <Text style={{ color: "white", fontSize: rf(18) }}>←</Text>
-          </TouchableOpacity>
+          <HeaderButton rf={rf} />
         </View>
 
         {/* Perfil */}
@@ -126,17 +156,7 @@ export default function Index() {
             23 seguidores • 4 seguindo
           </Text>
 
-          <TouchableOpacity
-            style={{
-              backgroundColor: "rgba(139, 69, 19, 0.8)",
-              paddingHorizontal: width < 360 ? rf(30) : rf(40),
-              paddingVertical: rf(12),
-              borderRadius: rf(25),
-              marginBottom: rf(20),
-            }}
-          >
-            <Text style={{ color: "white", fontSize: rf(16), fontWeight: "bold" }}>Seguir +</Text>
-          </TouchableOpacity>
+          <FollowButton rf={rf} width={width} />
 
           <Text style={{ color: "white", fontSize: rf(14), marginBottom: rf(20), textAlign: "center" }}>
             yrCapsaicin 🎵 naousoiphone
