@@ -1,92 +1,54 @@
-import React, { useRef, useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
-  SafeAreaView,
-  Animated,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
+import React from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 
 const App = () => {
-  const scaleAnim = useRef(new Animated.Value(1)).current;
-  const [showParticles, setShowParticles] = useState(false);
-
-  const particles = [
-    useRef(new Animated.Value(0)).current,
-    useRef(new Animated.Value(0)).current,
-    useRef(new Animated.Value(0)).current,
-  ];
-
-  const handlePress = () => {
-    Animated.sequence([
-      Animated.timing(scaleAnim, {
-        toValue: 1.3,
-        duration: 150,
-        useNativeDriver: true,
-      }),
-      Animated.timing(scaleAnim, {
-        toValue: 1,
-        duration: 150,
-        useNativeDriver: true,
-      }),
-    ]).start();
-
-    setShowParticles(true);
-    particles.forEach((particle, index) => {
-      particle.setValue(0);
-      Animated.timing(particle, {
-        toValue: 1,
-        duration: 600,
-        delay: index * 100,
-        useNativeDriver: true,
-      }).start(() => {
-        if (index === particles.length - 1) {
-          setShowParticles(false);
-        }
-      });
-    });
-  };
-
+  const rout = useRouter();
+  function fnSelect() {
+    rout.push('/selectGenero');
+  }
   return (
-   
+
     <LinearGradient
-    colors={['#962fbf', '#d62976', '#fa7e1e', '#feda75', '#4f5bd5']} 
-    style={styles.container}
-    start={{ x: 0.5, y: 0 }}    // topo centralizado (x = 0.5, y = 0)
-    end={{ x: 0.5, y: 1 }}     
-  >
-  
+      colors={['#962fbf', '#d62976', '#fa7e1e', '#feda75', '#4f5bd5']}
+      style={styles.container}
+      start={{ x: 0.5, y: 0 }}    // topo centralizado (x = 0.5, y = 0)
+      end={{ x: 0.5, y: 1 }}
+    >
+
 
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.header}>
           <Text style={styles.headerText}>Bem Vindo, "nome"!!</Text>
         </View>
         <View style={styles.fundoPost}>
-        <View style={styles.postagem}>
-        <Text style={styles.titulo}>Título da Postagem</Text>
-        <Text style={styles.conteudo}>
-          Este é o conteúdo da sua postagem. Você pode colocar texto, imagens ou qualquer outro componente aqui.
-        </Text>
-        </View>
-        <View style={styles.postagem}>
-        <Text style={styles.titulo}>Título da Postagem</Text>
-        <Text style={styles.conteudo}>
-          Este é o conteúdo da sua postagem. Você pode colocar texto, imagens ou qualquer outro componente aqui.
-        </Text>
-        </View>
-        <View style={styles.postagem}>
-        <Text style={styles.titulo}>Título da Postagem</Text>
-        <Text style={styles.conteudo}>
-          Este é o conteúdo da sua postagem. Você pode colocar texto, imagens ou qualquer outro componente aqui.
-        </Text>
-        </View>
+          <View style={styles.postagem}>
+            <Text style={styles.titulo}>Título da Postagem</Text>
+            <Text style={styles.conteudo}>
+              Este é o conteúdo da sua postagem. Você pode colocar texto, imagens ou qualquer outro componente aqui.
+            </Text>
+          </View>
+          <View style={styles.postagem}>
+            <Text style={styles.titulo}>Título da Postagem</Text>
+            <Text style={styles.conteudo}>
+              Este é o conteúdo da sua postagem. Você pode colocar texto, imagens ou qualquer outro componente aqui.
+            </Text>
+          </View>
+          <View style={styles.postagem}>
+            <Text style={styles.titulo}>Título da Postagem</Text>
+            <Text style={styles.conteudo}>
+              Este é o conteúdo da sua postagem. Você pode colocar texto, imagens ou qualquer outro componente aqui.
+            </Text>
+          </View>
 
-      </View>
-
+        </View>
         <View style={styles.nav}>
           <TouchableOpacity style={styles.navItem}>
             <Text style={styles.navText1}>Notificação</Text>
@@ -125,7 +87,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  fundoPost:{
+  fundoPost: {
     height: 400,
   },
   postagem: {

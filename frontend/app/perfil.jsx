@@ -1,16 +1,36 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
+import React, { useMemo, useState, memo, useCallback } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 
-const ProfileScreen = () => {
-  const { width, height } = useWindowDimensions();
+const ProfileScreen = memo(() => {
+  const { width } = useWindowDimensions();
+  const [pressingLogout, setPressingLogout] = useState(false);
 
-  // Escalonamento proporcional e limitado (evita exagero em telas muito grandes/pequenas)
-  const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
-  const rf = (size) => Math.round(clamp(size * (width / 390), size * 0.9, size * 1.6));
+  // Escala proporcional responsiva otimizada
+  const rf = useMemo(
+    () => (size) =>
+      Math.round(Math.max(size * 0.9, Math.min(size * 1.6, size * (width / 390)))),
+    [width]
+  );
 
   const paddingHorizontal = Math.max(16, width * 0.06);
   const isSmallScreen = width < 360;
+
+  // Dados estáticos
+  const statsData = useMemo(
+    () => [
+      { number: 0, label: 'Músicas Curtidas' },
+      { number: 0, label: 'Artistas Descobertos' },
+      { number: 0, label: 'Playlists Criadas' },
+    ],
+    []
+  );
+
+  const headerRadius = rf(28);
+
+  // Evita recriação de handlers a cada render
+  const handlePressIn = useCallback(() => setPressingLogout(true), []);
+  const handlePressOut = useCallback(() => setPressingLogout(false), []);
 
   return (
     <View style={styles.container}>
@@ -23,23 +43,26 @@ const ProfileScreen = () => {
           styles.header,
           {
             padding: paddingHorizontal,
-            borderBottomLeftRadius: rf(28),
-            borderBottomRightRadius: rf(28),
-            flexDirection: 'column',
+            borderBottomLeftRadius: headerRadius,
+            borderBottomRightRadius: headerRadius,
             gap: rf(10),
           },
         ]}
       >
         <Image
           source={{ uri: 'https://cdn-icons-png.flaticon.com/512/149/149071.png' }}
-          style={[
-            styles.profileImage,
-            { width: rf(100), height: rf(100), borderRadius: rf(50), marginBottom: rf(5) },
-          ]}
+          style={{
+            width: rf(100),
+            height: rf(100),
+            borderRadius: rf(50),
+            marginBottom: rf(5),
+            borderWidth: 2,
+            borderColor: '#fff',
+          }}
           resizeMode="cover"
         />
 
-        <View style={[styles.profileInfo, { gap: rf(3) }]}>
+        <View style={{ alignItems: 'center', gap: rf(3) }}>
           <Text style={[styles.username, { fontSize: rf(22 + (isSmallScreen ? -2 : 0)) }]}>Usuário</Text>
           <Text style={[styles.email, { fontSize: rf(13) }]}>blabla@gmail.com</Text>
           <Text style={[styles.memberSince, { fontSize: rf(12) }]}>Membro desde xx/xx/xxxx</Text>
@@ -49,23 +72,18 @@ const ProfileScreen = () => {
 
       {/* Estatísticas */}
       <View
-        style={[
-          styles.stats,
-          {
-            marginTop: rf(35),
-            gap: rf(30),
-            flexWrap: 'wrap',
-            width: '100%',
-            paddingHorizontal: width * 0.1,
-          },
-        ]}
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          marginTop: rf(35),
+          gap: rf(30),
+          flexWrap: 'wrap',
+          width: '100%',
+          paddingHorizontal: width * 0.1,
+        }}
       >
-        {[
-          { number: 0, label: 'Músicas Curtidas' },
-          { number: 0, label: 'Artistas Descobertos' },
-          { number: 0, label: 'Playlists Criadas' },
-        ].map((item, i) => (
-          <View key={i} style={[styles.statItem, { minWidth: rf(100) }]}>
+        {statsData.map((item, i) => (
+          <View key={i} style={{ alignItems: 'center', minWidth: rf(100) }}>
             <Text style={[styles.statNumber, { fontSize: rf(26) }]}>{item.number}</Text>
             <Text style={[styles.statLabel, { fontSize: rf(13) }]}>{item.label}</Text>
           </View>
@@ -74,10 +92,12 @@ const ProfileScreen = () => {
 
       {/* Botão logout */}
       <TouchableOpacity
-        activeOpacity={0.85}
+        activeOpacity={0.9}
         style={[
           styles.logoutButton,
           {
+            backgroundColor: pressingLogout ? '#d99ac1' : '#F1A7D5',
+            transform: [{ scale: pressingLogout ? 0.97 : 1 }],
             paddingVertical: rf(14),
             marginTop: rf(55),
             borderRadius: rf(14),
@@ -85,98 +105,58 @@ const ProfileScreen = () => {
             elevation: 3,
           },
         ]}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
       >
         <Text style={[styles.logoutText, { fontSize: rf(17) }]}>Sair da Conta</Text>
       </TouchableOpacity>
 
-      {/* Rodapé com 3 páginas */}
+      {/* Rodapé */}
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.footerItem}>
-          <Text style={styles.footerText}>Player</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.footerItem}>
-          <Text style={styles.footerText}>Curtidas</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.footerItem}>
-          <Text style={styles.footerText}>Perfil</Text>
-        </TouchableOpacity>
+        {['Player', 'Curtidas', 'Perfil'].map((label, i) => (
+          <TouchableOpacity
+            key={i}
+            style={styles.footerItem}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.footerText}>{label}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffd3e8',
-    alignItems: 'center',
-  },
+  container: { flex: 1, backgroundColor: '#ffd3e8', alignItems: 'center' },
   header: {
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    elevation: 3,
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
-  profileImage: {
-    borderWidth: 2,
-    borderColor: '#fff',
-  },
-  profileInfo: {
-    alignItems: 'center',
-  },
-  username: {
-    fontWeight: 'bold',
-    color: '#441b34',
-  },
-  email: {
-    color: '#380d26',
-  },
-  memberSince: {
-    color: '#2c2c2c',
-  },
-  location: {
-    color: '#6b4b63',
-  },
-  stats: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  statItem: {
-    alignItems: 'center',
-  },
-  statNumber: {
-    fontWeight: 'bold',
-    color: '#F1A7D5',
-  },
-  statLabel: {
-    color: '#D9A6C4',
-    textAlign: 'center',
-  },
-  logoutButton: {
-    backgroundColor: '#F1A7D5',
-    alignItems: 'center',
-  },
-  logoutText: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
+  username: { fontWeight: 'bold', color: '#441b34' },
+  email: { color: '#380d26' },
+  memberSince: { color: '#2c2c2c' },
+  location: { color: '#6b4b63' },
+  statNumber: { fontWeight: 'bold', color: '#F1A7D5' },
+  statLabel: { color: '#D9A6C4', textAlign: 'center' },
+  logoutButton: { alignItems: 'center' },
+  logoutText: { color: '#fff', fontWeight: 'bold' },
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    padding: 10,
+    paddingVertical: 12,
     backgroundColor: '#f7e6f0',
+    width: '100%',
+    borderTopWidth: 1,
+    borderTopColor: '#e5c7da',
   },
-  footerItem: {
-    padding: 10,
-  },
-  footerText: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#441b34',
-  },
+  footerItem: { padding: 10 },
+  footerText: { fontSize: 14, fontWeight: 'bold', color: '#441b34' },
 });
 
 export default ProfileScreen;
