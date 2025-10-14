@@ -1,341 +1,201 @@
-import { Text, View, ScrollView, TouchableOpacity } from "react-native"
-import { LinearGradient } from "expo-linear-gradient"
+import React, { useMemo, memo } from "react";
+import { Text, View, ScrollView, TouchableOpacity, useWindowDimensions, StyleSheet } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+
+// Componente memoizado para tags
+const GenreItem = memo(({ genre, rf, width }) => (
+  <TouchableOpacity
+    style={{
+      backgroundColor: "rgba(255, 182, 193, 0.8)",
+      paddingHorizontal: rf(20),
+      paddingVertical: rf(10),
+      borderRadius: rf(20),
+      marginBottom: rf(10),
+      width: width < 350 ? "100%" : "48%",
+    }}
+  >
+    <Text style={{ color: "white", fontSize: rf(14), textAlign: "center", fontWeight: "500" }}>
+      {genre}
+    </Text>
+  </TouchableOpacity>
+));
+
+// Componente memoizado para artistas
+const ArtistItem = memo(({ artist, rf, artistWidth }) => (
+  <TouchableOpacity
+    style={{
+      width: artistWidth,
+      flexDirection: "row",
+      alignItems: "center",
+      backgroundColor: "rgba(255, 182, 193, 0.6)",
+      borderRadius: rf(15),
+      padding: rf(12),
+      marginBottom: rf(10),
+    }}
+  >
+    <View
+      style={{
+        width: rf(40),
+        height: rf(40),
+        borderRadius: rf(20),
+        backgroundColor: "#4A5568",
+        marginRight: rf(10),
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Text style={{ color: "white", fontSize: rf(12) }}>{artist.icon}</Text>
+    </View>
+    <Text style={{ color: "white", fontSize: rf(16), fontWeight: "500" }}>{artist.name}</Text>
+  </TouchableOpacity>
+));
+
+// Botão memoizado para o header
+const HeaderButton = memo(({ rf }) => {
+  const style = useMemo(
+    () => ({
+      width: rf(40),
+      height: rf(40),
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: rf(20),
+      backgroundColor: "rgba(255,255,255,0.2)",
+    }),
+    [rf]
+  );
+  return (
+    <TouchableOpacity style={style}>
+      <Text style={{ color: "white", fontSize: rf(18) }}>←</Text>
+    </TouchableOpacity>
+  );
+});
+
+// Botão memoizado “Seguir +”
+const FollowButton = memo(({ rf, width }) => {
+  const style = useMemo(
+    () => ({
+      backgroundColor: "rgba(139, 69, 19, 0.8)",
+      paddingHorizontal: width < 360 ? rf(30) : rf(40),
+      paddingVertical: rf(12),
+      borderRadius: rf(25),
+      marginBottom: rf(20),
+    }),
+    [rf, width]
+  );
+  return (
+    <TouchableOpacity style={style}>
+      <Text style={{ color: "white", fontSize: rf(16), fontWeight: "bold" }}>Seguir +</Text>
+    </TouchableOpacity>
+  );
+});
 
 export default function Index() {
+  const { width, height } = useWindowDimensions();
+
+  const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
+  const rf = useMemo(() => (size) => Math.round(clamp(size * (width / 390), 12, 28)), [width]);
+
+  const paddingHorizontal = useMemo(() => Math.max(16, width * 0.05), [width]);
+  const paddingTop = useMemo(() => Math.max(40, height * 0.06), [height]);
+  const artistCols = useMemo(() => (width > 500 ? 3 : width > 350 ? 2 : 1), [width]);
+  const artistWidth = useMemo(() => (width - paddingHorizontal * 2 - (artistCols - 1) * rf(10)) / artistCols, [
+    width,
+    paddingHorizontal,
+    artistCols,
+    rf,
+  ]);
+
+  const genres = useMemo(() => ["Rock", "Metal industrial", "Forró", "Glam Rock"], []);
+  const artists = useMemo(
+    () => [
+      { icon: "🎵", name: "Jackson do Pandeiro" },
+      { icon: "🎸", name: "Nirvana" },
+      { icon: "🎤", name: "Marilyn Manson" },
+      { icon: "🎷", name: "Miles Davis" },
+      { icon: "🎹", name: "Chick Corea" },
+    ],
+    []
+  );
+
+  const scrollContentStyle = useMemo(() => ({ paddingBottom: rf(40) }), [rf]);
+  const profileIconStyle = useMemo(
+    () => ({
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: rf(60),
+      backgroundColor: "#4A5568",
+      marginBottom: rf(20),
+    }),
+    [rf]
+  );
+  const bioBoxStyle = useMemo(
+    () => ({
+      backgroundColor: "rgba(139, 69, 19, 0.6)",
+      borderRadius: rf(20),
+      padding: rf(20),
+      marginBottom: rf(20),
+    }),
+    [rf]
+  );
+
   return (
     <LinearGradient colors={["#8B5CF6", "#EAB308"]} style={{ flex: 1 }}>
-      <ScrollView style={{ flex: 1 }}>
-        {/* Header com botão voltar */}
-        <View style={{ paddingTop: 50, paddingHorizontal: 20, paddingBottom: 20 }}>
-          <TouchableOpacity
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20,
-              backgroundColor: "rgba(255,255,255,0.2)",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ color: "white", fontSize: 18 }}>←</Text>
-          </TouchableOpacity>
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={scrollContentStyle}>
+        {/* Header */}
+        <View style={{ paddingTop, paddingHorizontal, paddingBottom: rf(20) }}>
+          <HeaderButton rf={rf} />
         </View>
 
-        {/* Seção do perfil */}
-        <View style={{ alignItems: "center", paddingHorizontal: 20 }}>
-          {/* Foto do perfil */}
-          <View
-            style={{
-              width: 120,
-              height: 120,
-              borderRadius: 60,
-              backgroundColor: "#4A5568",
-              marginBottom: 20,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ color: "white", fontSize: 16 }}>👤</Text>
+        {/* Perfil */}
+        <View style={{ alignItems: "center", paddingHorizontal }}>
+          <View style={[profileIconStyle, { width: rf(120), height: rf(120) }]}>
+            <Text style={{ color: "white", fontSize: rf(20) }}>👤</Text>
           </View>
 
-          {/* Nome do usuário */}
-          <Text
-            style={{
-              color: "white",
-              fontSize: 24,
-              fontWeight: "bold",
-              marginBottom: 8,
-            }}
-          >
-            Fulano D`Town
+          <Text style={{ color: "white", fontSize: rf(24), fontWeight: "bold", marginBottom: rf(8), textAlign: "center" }}>
+            Fulano D'Town
           </Text>
 
-          {/* Estatísticas */}
-          <Text
-            style={{
-              color: "white",
-              fontSize: 16,
-              marginBottom: 20,
-            }}
-          >
+          <Text style={{ color: "white", fontSize: rf(16), marginBottom: rf(20), textAlign: "center" }}>
             23 seguidores • 4 seguindo
           </Text>
 
-          {/* Botão Seguir */}
-          <TouchableOpacity
-            style={{
-              backgroundColor: "rgba(139, 69, 19, 0.8)",
-              paddingHorizontal: 40,
-              paddingVertical: 12,
-              borderRadius: 25,
-              marginBottom: 20,
-            }}
-          >
-            <Text
-              style={{
-                color: "white",
-                fontSize: 16,
-                fontWeight: "bold",
-              }}
-            >
-              Seguir +
-            </Text>
-          </TouchableOpacity>
+          <FollowButton rf={rf} width={width} />
 
-          {/* Info do usuário */}
-          <Text
-            style={{
-              color: "white",
-              fontSize: 14,
-              marginBottom: 20,
-            }}
-          >
+          <Text style={{ color: "white", fontSize: rf(14), marginBottom: rf(20), textAlign: "center" }}>
             yrCapsaicin 🎵 naousoiphone
           </Text>
         </View>
 
         {/* Bio */}
-        <View
-          style={{
-            marginHorizontal: 20,
-            backgroundColor: "rgba(139, 69, 19, 0.6)",
-            borderRadius: 20,
-            padding: 20,
-            marginBottom: 20,
-          }}
-        >
-          <Text
-            style={{
-              color: "white",
-              fontSize: 16,
-              lineHeight: 24,
-            }}
-          >
+        <View style={[bioBoxStyle, { marginHorizontal: paddingHorizontal }]}>
+          <Text style={{ color: "white", fontSize: rf(16), lineHeight: rf(24), textAlign: "justify" }}>
             eeeer amo ouçar musga{"\n"}amo tumati tamem
           </Text>
         </View>
 
-        {/* Tags de gêneros */}
-        <View
-          style={{
-            paddingHorizontal: 20,
-            marginBottom: 30,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                backgroundColor: "rgba(255, 182, 193, 0.8)",
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                borderRadius: 20,
-                marginBottom: 10,
-                width: "48%",
-              }}
-            >
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: 14,
-                  textAlign: "center",
-                  fontWeight: "500",
-                }}
-              >
-                Rock
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={{
-                backgroundColor: "rgba(255, 182, 193, 0.8)",
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                borderRadius: 20,
-                marginBottom: 10,
-                width: "48%",
-              }}
-            >
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: 14,
-                  textAlign: "center",
-                  fontWeight: "500",
-                }}
-              >
-                Metal industrial
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={{
-                backgroundColor: "rgba(255, 182, 193, 0.8)",
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                borderRadius: 20,
-                marginBottom: 10,
-                width: "48%",
-              }}
-            >
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: 14,
-                  textAlign: "center",
-                  fontWeight: "500",
-                }}
-              >
-                Forró
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={{
-                backgroundColor: "rgba(255, 182, 193, 0.8)",
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                borderRadius: 20,
-                marginBottom: 10,
-                width: "48%",
-              }}
-            >
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: 14,
-                  textAlign: "center",
-                  fontWeight: "500",
-                }}
-              >
-                Glam Rock
-              </Text>
-            </TouchableOpacity>
+        {/* Tags */}
+        <View style={{ paddingHorizontal, marginBottom: rf(30) }}>
+          <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
+            {genres.map((g, i) => (
+              <GenreItem key={i} genre={g} rf={rf} width={width} />
+            ))}
           </View>
         </View>
 
-        {/* Artistas mais ouvidos */}
-        <View style={{ paddingHorizontal: 20, paddingBottom: 40 }}>
-          <Text
-            style={{
-              color: "white",
-              fontSize: 20,
-              fontWeight: "bold",
-              marginBottom: 20,
-            }}
-          >
+        {/* Artistas responsivo em grid */}
+        <View style={{ paddingHorizontal, paddingBottom: rf(40) }}>
+          <Text style={{ color: "white", fontSize: rf(20), fontWeight: "bold", marginBottom: rf(20) }}>
             Artistas mais ouvidos
           </Text>
 
-          {/* Lista de artistas */}
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              backgroundColor: "rgba(255, 182, 193, 0.6)",
-              borderRadius: 15,
-              padding: 15,
-              marginBottom: 10,
-            }}
-          >
-            <View
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 20,
-                backgroundColor: "#4A5568",
-                marginRight: 15,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "white", fontSize: 12 }}>🎵</Text>
-            </View>
-            <Text
-              style={{
-                color: "white",
-                fontSize: 16,
-                fontWeight: "500",
-              }}
-            >
-              Jackson do Pandeiro
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              backgroundColor: "rgba(255, 182, 193, 0.6)",
-              borderRadius: 15,
-              padding: 15,
-              marginBottom: 10,
-            }}
-          >
-            <View
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 20,
-                backgroundColor: "#4A5568",
-                marginRight: 15,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "white", fontSize: 12 }}>🎸</Text>
-            </View>
-            <Text
-              style={{
-                color: "white",
-                fontSize: 16,
-                fontWeight: "500",
-              }}
-            >
-              Nirvana
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              backgroundColor: "rgba(255, 182, 193, 0.6)",
-              borderRadius: 15,
-              padding: 15,
-              marginBottom: 10,
-            }}
-          >
-            <View
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 20,
-                backgroundColor: "#4A5568",
-                marginRight: 15,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "white", fontSize: 12 }}>🎤</Text>
-            </View>
-            <Text
-              style={{
-                color: "white",
-                fontSize: 16,
-                fontWeight: "500",
-              }}
-            >
-              Marilyn Manson
-            </Text>
-          </TouchableOpacity>
+          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: rf(10) }}>
+            {artists.map((a, i) => (
+              <ArtistItem key={i} artist={a} rf={rf} artistWidth={artistWidth} />
+            ))}
+          </View>
         </View>
       </ScrollView>
     </LinearGradient>
-  )
+  );
 }

@@ -1,32 +1,20 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView, KeyboardAvoidingView, Platform } from "react-native";
-import { useState } from "react"; // Para gerenciar estado
-import { useRouter } from "expo-router"; // Certifique-se de que está usando o roteador correto
-import { clamp } from "lodash"; // Certifique-se de que lodash está instalado
-import { Dimensions } from "react-native";
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-// Variáveis auxiliares
-const { height } = Dimensions.get("window");
-const rf = (size) => size; // Substitua por sua função real de cálculo de tamanho responsivo
-const containerPadding = 16; // Ajuste conforme necessário
-const maxContentWidth = 400; // Ajuste conforme necessário
+
 
 export default function Index() {
-  const router = useRouter(); // Use o roteador correto
-  const [email, setEmail] = useState(""); // Estado para o email
-  const [senha, setSenha] = useState(""); // Estado para a senha
+  function cadastro() {
+    roteador.push('/cadastrar');
+  }
+  function entrar() {
+    router.push("/uploadMusic");
+  }
 
   function cadastro() {
     router.push("/cadastrar");
   }
 
-  function curtidas() {
-    router.push("/curtidas");
-  }
-
-  function entrar() {
-    router.push("/uploadMusic");
-  }
 
   return (
     <LinearGradient
@@ -96,19 +84,11 @@ export default function Index() {
               onPress={entrar}
             >
               <Text style={[styles.buttonText, { fontSize: rf(16) }]}>Entrar</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={curtidas}>
-              <Text style={styles.footer}>
-                Quer músicas curtidas?{" "}
-                <Text style={styles.footerLink}>Relembre-se</Text>
-              </Text>
-            </TouchableOpacity>
+            </TouchableOpacity >
 
             <TouchableOpacity onPress={cadastro}>
-              <Text style={styles.footer}>
-                Não tem uma conta?{" "}
-                <Text style={styles.footerLink}>Cadastre-se</Text>
+              <Text style={[styles.footer, { fontSize: rf(14) }]}>
+                Não tem uma conta? <Text style={styles.footerLink}>Cadastre-se</Text>
               </Text>
             </TouchableOpacity>
           </View>
@@ -164,3 +144,4 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
 });
+

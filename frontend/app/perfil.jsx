@@ -1,121 +1,162 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import React, { useMemo, useState, memo, useCallback } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 
-const ProfileScreen = () => {
+const ProfileScreen = memo(() => {
+  const { width } = useWindowDimensions();
+  const [pressingLogout, setPressingLogout] = useState(false);
 
-  const { width, height } = useWindowDimensions();
+  // Escala proporcional responsiva otimizada
+  const rf = useMemo(
+    () => (size) =>
+      Math.round(Math.max(size * 0.9, Math.min(size * 1.6, size * (width / 390)))),
+    [width]
+  );
 
-  const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
-  const rf = (size) => Math.round(clamp(size * (width / 375), size * 0.85, size * 1.6));
+  const paddingHorizontal = Math.max(16, width * 0.06);
+  const isSmallScreen = width < 360;
 
-  const paddingHorizontal = Math.max(12, width * 0.05);
+  // Dados estáticos
+  const statsData = useMemo(
+    () => [
+      { number: 0, label: 'Músicas Curtidas' },
+      { number: 0, label: 'Artistas Descobertos' },
+      { number: 0, label: 'Playlists Criadas' },
+    ],
+    []
+  );
 
+  const headerRadius = rf(28);
+
+  // Evita recriação de handlers a cada render
+  const handlePressIn = useCallback(() => setPressingLogout(true), []);
+  const handlePressOut = useCallback(() => setPressingLogout(false), []);
 
   return (
     <View style={styles.container}>
-      
-      <View style={[
+      {/* Cabeçalho */}
+      <LinearGradient
+        colors={['#FEC4C7', '#D9A6C4']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={[
           styles.header,
-          { padding: paddingHorizontal, borderBottomLeftRadius: rf(20), borderBottomRightRadius: rf(20) },
-        ]}>
-        {/* COLOCAR IMAGEM */}
-        
-        <View style={styles.profileInfo}>
-          <Text style={[styles.username, { fontSize: rf(24) }]}>Usuário</Text>
-          <Text style={[styles.email, { fontSize: rf(14) }]}>blabla@gmail.com</Text>
+          {
+            padding: paddingHorizontal,
+            borderBottomLeftRadius: headerRadius,
+            borderBottomRightRadius: headerRadius,
+            gap: rf(10),
+          },
+        ]}
+      >
+        <Image
+          source={{ uri: 'https://cdn-icons-png.flaticon.com/512/149/149071.png' }}
+          style={{
+            width: rf(100),
+            height: rf(100),
+            borderRadius: rf(50),
+            marginBottom: rf(5),
+            borderWidth: 2,
+            borderColor: '#fff',
+          }}
+          resizeMode="cover"
+        />
+
+        <View style={{ alignItems: 'center', gap: rf(3) }}>
+          <Text style={[styles.username, { fontSize: rf(22 + (isSmallScreen ? -2 : 0)) }]}>Usuário</Text>
+          <Text style={[styles.email, { fontSize: rf(13) }]}>blabla@gmail.com</Text>
           <Text style={[styles.memberSince, { fontSize: rf(12) }]}>Membro desde xx/xx/xxxx</Text>
-          <Text style={[styles.location, { fontSize: rf(14) }]}>São Paulo, SP</Text>
+          <Text style={[styles.location, { fontSize: rf(13) }]}>São Paulo, SP</Text>
         </View>
+      </LinearGradient>
+
+      {/* Estatísticas */}
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          marginTop: rf(35),
+          gap: rf(30),
+          flexWrap: 'wrap',
+          width: '100%',
+          paddingHorizontal: width * 0.1,
+        }}
+      >
+        {statsData.map((item, i) => (
+          <View key={i} style={{ alignItems: 'center', minWidth: rf(100) }}>
+            <Text style={[styles.statNumber, { fontSize: rf(26) }]}>{item.number}</Text>
+            <Text style={[styles.statLabel, { fontSize: rf(13) }]}>{item.label}</Text>
+          </View>
+        ))}
       </View>
 
-      {/* Estatísticas do perfil */}
-      <View style={[styles.stats, { marginTop: rf(30) }]}>
-        <View style={styles.statItem}>
-          <Text style={[styles.statNumber, { fontSize: rf(24) }]}>0</Text>
-          <Text style={[styles.statLabel, { fontSize: rf(12) }]}>Músicas Curtidas</Text>
-        </View>
-        <View style={styles.statItem}>
-          <Text style={[styles.statNumber, { fontSize: rf(24) }]}>0</Text>
-          <Text style={[styles.statLabel, { fontSize: rf(12) }]}>Artistas Descobertos</Text>
-        </View>
-      </View>
-
-      {/* Botão de logout */}
-      <TouchableOpacity style={[styles.logoutButton, { paddingVertical: rf(12), marginTop: rf(40), borderRadius: rf(10) }]}>
-        <Text style={[styles.logoutText, { fontSize: rf(16) }]}>Sair da Conta</Text>
+      {/* Botão logout */}
+      <TouchableOpacity
+        activeOpacity={0.9}
+        style={[
+          styles.logoutButton,
+          {
+            backgroundColor: pressingLogout ? '#d99ac1' : '#F1A7D5',
+            transform: [{ scale: pressingLogout ? 0.97 : 1 }],
+            paddingVertical: rf(14),
+            marginTop: rf(55),
+            borderRadius: rf(14),
+            width: width * 0.7,
+            elevation: 3,
+          },
+        ]}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+      >
+        <Text style={[styles.logoutText, { fontSize: rf(17) }]}>Sair da Conta</Text>
       </TouchableOpacity>
+
+      {/* Rodapé */}
+      <View style={styles.footer}>
+        {['Player', 'Curtidas', 'Perfil'].map((label, i) => (
+          <TouchableOpacity
+            key={i}
+            style={styles.footerItem}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.footerText}>{label}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffd3e8',
-  },
+  container: { flex: 1, backgroundColor: '#ffd3e8', alignItems: 'center' },
   header: {
-    flexDirection: 'row',
-    padding: 20,
-    backgroundColor: 'linear-gradient(to right, #FEC4C7, #D9A6C4)', // Gradiente semelhante ao da imagem
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    width: '100%',
     alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
-  profileImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    marginRight: 15,
-  },
-  profileInfo: {
-    flex: 1,
-  },
-  username: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#441b34',
-  },
-  email: {
-    fontSize: 14,
-    color: '#380d26',
-  },
-  memberSince: {
-    fontSize: 12,
-    color: '#2c2c2c',
-  },
-  location: {
-    fontSize: 14,
-    color: '#cac3c7',
-  },
-  stats: {
+  username: { fontWeight: 'bold', color: '#441b34' },
+  email: { color: '#380d26' },
+  memberSince: { color: '#2c2c2c' },
+  location: { color: '#6b4b63' },
+  statNumber: { fontWeight: 'bold', color: '#F1A7D5' },
+  statLabel: { color: '#D9A6C4', textAlign: 'center' },
+  logoutButton: { alignItems: 'center' },
+  logoutText: { color: '#fff', fontWeight: 'bold' },
+  footer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 30,
+    paddingVertical: 12,
+    backgroundColor: '#f7e6f0',
+    width: '100%',
+    borderTopWidth: 1,
+    borderTopColor: '#e5c7da',
   },
-  statItem: {
-    alignItems: 'center',
-  },
-  statNumber: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#F1A7D5',
-  },
-  statLabel: {
-    fontSize: 12,
-    color: '#D9A6C4',
-  },
-  logoutButton: {
-    backgroundColor: '#F1A7D5',
-    padding: 10,
-    marginTop: 40,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  logoutText: {
-    fontSize: 16,
-    color: '#fff',
-    fontWeight: 'bold',
-  },
+  footerItem: { padding: 10 },
+  footerText: { fontSize: 14, fontWeight: 'bold', color: '#441b34' },
 });
 
 export default ProfileScreen;

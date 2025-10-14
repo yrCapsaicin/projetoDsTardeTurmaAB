@@ -1,58 +1,54 @@
-import React, { useRef, useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
-  SafeAreaView,
-  Animated,
-  Button,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
+import React from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 
 const App = () => {
   const rout = useRouter();
-  function fnSelect (){
+  function fnSelect() {
     rout.push('/selectGenero');
   }
   return (
-   
+
     <LinearGradient
-    colors={['#962fbf', '#d62976', '#fa7e1e', '#feda75', '#4f5bd5']} 
-    style={styles.container}
-    start={{ x: 0.5, y: 0 }}    // topo centralizado (x = 0.5, y = 0)
-    end={{ x: 0.5, y: 1 }}     
-  >
-  
+      colors={['#962fbf', '#d62976', '#fa7e1e', '#feda75', '#4f5bd5']}
+      style={styles.container}
+      start={{ x: 0.5, y: 0 }}    // topo centralizado (x = 0.5, y = 0)
+      end={{ x: 0.5, y: 1 }}
+    >
+
 
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.header}>
           <Text style={styles.headerText}>Bem Vindo, "nome"!!</Text>
         </View>
         <View style={styles.fundoPost}>
-        <View style={styles.postagem}>
-        <Text style={styles.titulo}>Título da Postagem</Text>
-        <Text style={styles.conteudo}>
-          Este é o conteúdo da sua postagem. Você pode colocar texto, imagens ou qualquer outro componente aqui.
-        </Text>
-        </View>
-        <View style={styles.postagem}>
-        <Text style={styles.titulo}>Título da Postagem</Text>
-        <Text style={styles.conteudo}>
-          Este é o conteúdo da sua postagem. Você pode colocar texto, imagens ou qualquer outro componente aqui.
-        </Text>
-        </View>
-        <View style={styles.postagem}>
-        <Text style={styles.titulo}>Título da Postagem</Text>
-        <Text style={styles.conteudo}>
-          Este é o conteúdo da sua postagem. Você pode colocar texto, imagens ou qualquer outro componente aqui.
-        </Text>
-        </View>
+          <View style={styles.postagem}>
+            <Text style={styles.titulo}>Título da Postagem</Text>
+            <Text style={styles.conteudo}>
+              Este é o conteúdo da sua postagem. Você pode colocar texto, imagens ou qualquer outro componente aqui.
+            </Text>
+          </View>
+          <View style={styles.postagem}>
+            <Text style={styles.titulo}>Título da Postagem</Text>
+            <Text style={styles.conteudo}>
+              Este é o conteúdo da sua postagem. Você pode colocar texto, imagens ou qualquer outro componente aqui.
+            </Text>
+          </View>
+          <View style={styles.postagem}>
+            <Text style={styles.titulo}>Título da Postagem</Text>
+            <Text style={styles.conteudo}>
+              Este é o conteúdo da sua postagem. Você pode colocar texto, imagens ou qualquer outro componente aqui.
+            </Text>
+          </View>
 
-      </View>
+        </View>
         <View style={styles.nav}>
           <TouchableOpacity style={styles.navItem}>
             <Text style={styles.navText1}>Notificação</Text>
@@ -91,7 +87,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  fundoPost:{
+  fundoPost: {
     height: 400,
   },
   postagem: {
