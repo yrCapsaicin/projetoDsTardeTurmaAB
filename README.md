@@ -65,13 +65,6 @@ https://youtu.be/vXIJ2t6O8QU?si=11NeaYQ7K9PGJ7cp
   $ pip install -r requirements.txt
   ```
 
-<br>
-
-4. Ativando o Database no seguinte diretório: `projetoDsTardeTurmaAB/backend/`, rode o comando abaixo:
-
-```cmd
-$ docker compose up
-``` 
 
 <br>
 
