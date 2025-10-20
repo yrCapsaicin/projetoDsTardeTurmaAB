@@ -32,26 +32,10 @@ A proposta é oferecer uma experiência envolvente e intuitiva, ajudando os usu�
 
 ## 🗄️ Banco de Dados (PostgreSQL)
 
-O projeto utiliza **PostgreSQL** rodando em um container Docker.  
+O projeto utiliza **PostgreSQL** rodando no SUPABASE.  
 
-### 📦 Instalação
-
-1. Baixe o arquivo do banco de dados [aqui](https://github.com/ensismoebius/projetoDsTardeTurmaAB/tree/main/backend).
-
-<br>
-
-2. Extraia para a ferramenta que estiver utilizando(pgAdmin, DBeaver, ou CLI).
-
-<br>
-
-3. Configure as variáveis de ambiente no arquivo `.env` (ou diretamente no `docker-compose.yml`):
-
-  ```env
-  POSTGRES_USER=postgres
-  POSTGRES_PASSWORD=postgres
-  POSTGRES_DB=SingerSwipe
-  POSTGRES_PORT=2222 
-  ``` 
+## Tutorial no youtube de como utilizar
+https://youtu.be/vXIJ2t6O8QU?si=11NeaYQ7K9PGJ7cp
 
 ### 🔹 Backend (FastAPI)
 
